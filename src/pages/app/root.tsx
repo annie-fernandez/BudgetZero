@@ -6,9 +6,11 @@ import Shell from "./AppShell/AppShell";
 import useGlobalStore from "../../store/useGlobalStore";
 import RegisterUser from "../../components/RegisterUser/RegisterUser";
 import useLoadUserData from "../../hooks/useLoadUserData";
+import useGetTransactions from "../../hooks/useGetTransactions";
 
 const Root = (): JSX.Element => {
   useLoadUserData();
+  useGetTransactions();
 
   const location = useLocation();
   const session = useSession();

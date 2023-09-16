@@ -1,6 +1,5 @@
 import { Button } from "@mantine/core";
 import { openModal } from "@mantine/modals";
-import React from "react";
 import { Plus } from "react-feather";
 import AddTransactionModal from "./AddTransactionModal/AddTransactionModal";
 
