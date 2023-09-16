@@ -12,10 +12,7 @@ import LoadingOverlay from "./components/LoadingOverlay/LoadingOverlay";
 import { createClient } from "@supabase/supabase-js";
 import constants from "./constants/constants";
 import Root from "./pages/app/root";
-import Note from "./pages/app/Note/Note";
-import Space from "./pages/app/Space/Space";
-import Folder from "./pages/app/Folder/Folder";
-import AllSpaces from "./pages/app/AllSpaces/AllSpaces";
+import Dashboard from "./pages/app/Dashboard/Dashboard";
 
 const supabase = createClient(
   constants.supabaseUrl || "",
@@ -34,19 +31,7 @@ function App() {
       children: [
         {
           path: "/",
-          element: <AllSpaces />,
-        },
-        {
-          path: "/space/:spaceId",
-          element: <Space />,
-        },
-        {
-          path: "/folder/:folderId",
-          element: <Folder />,
-        },
-        {
-          path: "/note/:noteId",
-          element: <Note />,
+          element: <Dashboard />,
         },
       ],
     },
