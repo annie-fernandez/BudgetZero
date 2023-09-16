@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { Database } from "../../../../types/database.types";
 import { showNotification } from "@mantine/notifications";
 import { closeAllModals } from "@mantine/modals";
+import useGlobalStore from "../../../store/useGlobalStore";
 
 interface IFormValues {
   name: string;
@@ -24,6 +25,7 @@ interface IFormValues {
 const AddTransactionModal = (): JSX.Element => {
   const supabase = useSupabaseClient<Database>();
   const session = useSession();
+  const { fetchTransactions } = useGlobalStore();
 
   const [isRecurring, setIsRecurring] = React.useState(false);
   const [dueDate, setDueDate] = useState<string | null>(null);
@@ -58,6 +60,7 @@ const AddTransactionModal = (): JSX.Element => {
       });
     }
 
+    fetchTransactions({ supabase });
     closeAllModals();
   });
 
@@ -87,11 +90,14 @@ const AddTransactionModal = (): JSX.Element => {
       />
       <TextInput
         mt={10}
-        type="number"
         {...register("amount", {
           required: "This transaction's amount is required",
+          pattern: {
+            value: /^\d+(\.\d{1,2})?$/,
+            message: " Maximum two decimal places allowed.",
+          },
           minLength: {
-            value: 3,
+            value: 1,
             message: "At least 3 characters",
           },
         })}
