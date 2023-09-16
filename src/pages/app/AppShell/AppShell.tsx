@@ -21,7 +21,9 @@ export default function Shell() {
       navbar={<Navbar />}
       header={<Header />}
     >
-      <Outlet />
+      <div style={{ maxWidth: "1200px", margin: "auto" }}>
+        <Outlet />
+      </div>
     </AppShell>
   );
 }
