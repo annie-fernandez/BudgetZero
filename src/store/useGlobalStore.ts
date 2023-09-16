@@ -101,9 +101,9 @@ const useGlobalStore = create<IGlobalState>()(
       (set) => ({
         ...initialState,
         fetchTransactions: async ({ supabase }): Promise<void> => {
-          set(() => ({
+          set((state) => ({
             app: {
-              ...initialState.app,
+              ...state.app,
               isLoadingTransactions: true,
             },
           }));
@@ -120,18 +120,18 @@ const useGlobalStore = create<IGlobalState>()(
             });
           }
 
-          set(() => ({
+          set((state) => ({
             transactions: data,
             app: {
-              ...initialState.app,
+              ...state.app,
               isLoadingTransactions: false,
             },
           }));
         },
         fetchCategories: async ({ supabase }): Promise<void> => {
-          set(() => ({
+          set((state) => ({
             app: {
-              ...initialState.app,
+              ...state.app,
               isLoadingCategories: true,
             },
           }));
@@ -148,10 +148,10 @@ const useGlobalStore = create<IGlobalState>()(
             });
           }
 
-          set(() => ({
+          set((state) => ({
             categories: data,
             app: {
-              ...initialState.app,
+              ...state.app,
               isLoadingTransactions: false,
             },
           }));
