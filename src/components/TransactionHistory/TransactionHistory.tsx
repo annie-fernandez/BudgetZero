@@ -1,4 +1,13 @@
-import { Alert, Box, Button, Flex, Paper, Skeleton, Text } from "@mantine/core";
+import {
+  Alert,
+  Badge,
+  Box,
+  Button,
+  Flex,
+  Paper,
+  Skeleton,
+  Text,
+} from "@mantine/core";
 import { openModal } from "@mantine/modals";
 import { AlertTriangle, ExternalLink, Info, Plus } from "react-feather";
 import AddTransactionModal from "./AddTransactionModal/AddTransactionModal";
@@ -69,9 +78,13 @@ const TransactionHistory = ({
             <Paper p={10} mt={10}>
               <Flex justify="space-between">
                 <div>
-                  <Text size={18} weight="bold">
-                    {transaction.name}
-                  </Text>
+                  <Flex align="center">
+                    <Text size={18} weight="bold">
+                      {transaction.name}
+                    </Text>
+                    <Badge ml={5}>{transaction.category.name}</Badge>
+                  </Flex>
+
                   <Text size={12}>{transaction.description}</Text>
                 </div>
                 <Box mr={10}>

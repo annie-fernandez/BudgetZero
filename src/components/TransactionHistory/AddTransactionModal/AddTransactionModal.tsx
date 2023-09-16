@@ -37,6 +37,8 @@ const AddTransactionModal = (): JSX.Element => {
   const [isRecurring, setIsRecurring] = React.useState(false);
   const [dueDate, setDueDate] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [category, setCategory] = useState<string | null>(null);
+
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
   const {
@@ -56,6 +58,7 @@ const AddTransactionModal = (): JSX.Element => {
       user_id: session?.user.id || "",
       description: data.description || "",
       due_date: dueDate ? parseInt(dueDate) : null,
+      category_id: category ? parseInt(category) : null,
     });
 
     setIsLoading(false);
@@ -152,8 +155,15 @@ const AddTransactionModal = (): JSX.Element => {
         label="Categories"
         description="Select one or more categories"
         withAsterisk
+        value={category}
+        onChange={(value) => {
+          setCategory(value);
+        }}
         data={categories.map((category) => {
-          return { value: category.name, label: category.name };
+          return {
+            value: category.id.toString(),
+            label: category.name,
+          };
         })}
         placeholder="Select items"
         searchable
