@@ -12,6 +12,14 @@ interface IApp {
   registerUserActiveStep: number;
 }
 
+interface ITransactions {
+  id: string;
+  createdAt: string;
+  amount: number;
+  description: string;
+  dueDate: string;
+}
+
 export interface IUser {
   email: string | null;
   imageUrl: string | null;
@@ -25,6 +33,7 @@ interface IGlobalStateValues {
   preferences: IPreferences;
   app: IApp;
   user: IUser;
+  transactions: ITransactions[];
 }
 
 export interface IGlobalState extends IGlobalStateValues {
@@ -41,6 +50,7 @@ export const initialState: IGlobalStateValues = {
     isSettingsDrawerOpen: false,
     registerUserActiveStep: 0,
   },
+  transactions: [],
   user: {
     email: null,
     name: null,
