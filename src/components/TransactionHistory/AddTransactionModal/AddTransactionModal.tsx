@@ -58,7 +58,7 @@ const AddTransactionModal = (): JSX.Element => {
       user_id: session?.user.id || "",
       description: data.description || "",
       due_date: dueDate ? parseInt(dueDate) : null,
-      category_id: category ? parseInt(category) : null,
+      category_id: category !== null ? parseInt(category) : null,
     });
 
     setIsLoading(false);
@@ -74,18 +74,26 @@ const AddTransactionModal = (): JSX.Element => {
     closeAllModals();
   });
 
+  console.log(category);
+
   const handleCreateCategory = async ({ name }: { name: string }) => {
     setApp({ isLoadingCategories: true });
 
-    const { error: resError } = await supabase.from("categories").insert({
-      name,
-      user_id: session?.user.id || "",
-    });
+    const { data: newCategoryData, error: resError } = await supabase
+      .from("categories")
+      .insert({
+        name,
+        user_id: session?.user.id || "",
+      })
+      .select()
+      .single();
+
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    setCategory(newCategoryData?.id);
 
     if (resError) {
       setApp({ isLoadingCategories: false });
-
-      console.log(resError);
 
       return showNotification({
         title: "Error",
@@ -165,7 +173,8 @@ const AddTransactionModal = (): JSX.Element => {
             label: category.name,
           };
         })}
-        placeholder="Select items"
+        placeholder="Select or add category"
+        required
         searchable
         creatable
         getCreateLabel={(query) => `+ Create new category "${query}"`}

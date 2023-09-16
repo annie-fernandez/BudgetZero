@@ -27,7 +27,7 @@ interface ITransactions extends IDatabaseTransactions {
   category: IDatabaseCategories;
 }
 
-interface IMeta { 
+interface IMeta {
   totalExpenses: number;
 }
 
@@ -107,8 +107,6 @@ const useGlobalStore = create<IGlobalState>()(
             .select("*, category:category_id(*)")
             .order("created_at", { ascending: false });
 
-            console.log(data)
-
           if (error) {
             return showNotification({
               title: "Error",
@@ -121,6 +119,7 @@ const useGlobalStore = create<IGlobalState>()(
               ...state.app,
               isLoadingTransactions: false,
             },
+            transactions: data, // Dont remove this the error is ok
           }));
         },
         setMeta(newState) {
@@ -142,7 +141,9 @@ const useGlobalStore = create<IGlobalState>()(
 
           const { data, error } = await supabase
             .from("categories")
-            .select("*")
+            .select(
+              "*, transactions:transactions_id(*), transactions:category_id(*)"
+            )
             .order("created_at", { ascending: false });
 
           if (error) {
@@ -156,7 +157,7 @@ const useGlobalStore = create<IGlobalState>()(
             categories: data,
             app: {
               ...state.app,
-              isLoadingTransactions: false,
+              isLoadingCategories: false,
             },
           }));
         },
