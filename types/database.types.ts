@@ -50,7 +50,7 @@ export interface Database {
           gross_salary: number
           id: string
           image_url: string | null
-          is_register_complete: boolean
+          register_complete: boolean
         }
         Insert: {
           created_at?: string
@@ -58,7 +58,7 @@ export interface Database {
           gross_salary: number
           id?: string
           image_url?: string | null
-          is_register_complete?: boolean
+          register_complete?: boolean
         }
         Update: {
           created_at?: string
@@ -66,7 +66,7 @@ export interface Database {
           gross_salary?: number
           id?: string
           image_url?: string | null
-          is_register_complete?: boolean
+          register_complete?: boolean
         }
         Relationships: []
       }

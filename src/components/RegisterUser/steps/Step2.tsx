@@ -71,7 +71,7 @@ const Step2 = ({ prevStep }: IStepProps): JSX.Element => {
       IMAGE_URL = imageUrlData.publicUrl;
     }
 
-    if (!user.name || !session.user.email) {
+    if (!user.name || !user.grossIncome || !session.user.email) {
       setIsLoadingSavingData(false);
 
       return showNotification({
@@ -86,6 +86,7 @@ const Step2 = ({ prevStep }: IStepProps): JSX.Element => {
       email: session.user.email,
       image_url: IMAGE_URL,
       id: session?.user.id,
+      gross_income: user.grossIncome,
     });
 
     if (error) {
