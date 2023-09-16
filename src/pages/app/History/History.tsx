@@ -1,9 +1,14 @@
 import React from "react";
+import TransactionHistory from "../../../components/TransactionHistory/TransactionHistory";
 
 const History = (): JSX.Element => {
   return (
     <div>
-      <h1>History</h1>
+      <TransactionHistory
+        title="All Transactions"
+        hideSeeAll
+        maxTransactions={9999}
+      />
     </div>
   );
 };

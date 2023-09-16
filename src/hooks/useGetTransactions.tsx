@@ -6,10 +6,11 @@ import useGlobalStore from "../store/useGlobalStore";
 const useGetTransactions = () => {
   const supabase = useSupabaseClient<Database>();
 
-  const { user, fetchTransactions } = useGlobalStore();
+  const { user, fetchTransactions, fetchCategories } = useGlobalStore();
 
   useEffect(() => {
     fetchTransactions({ supabase });
+    fetchCategories({ supabase });
   }, [user]);
 };
 

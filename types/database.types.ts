@@ -9,10 +9,38 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      categories: {
+        Row: {
+          created_at: string
+          id: number
+          name: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          name: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          name?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "categories_user_id_fkey"
+            columns: ["user_id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
       transactions: {
         Row: {
           amount: number
-          category: string | null
+          category_id: number | null
           created_at: string
           description: string | null
           due_date: number | null
@@ -22,7 +50,7 @@ export interface Database {
         }
         Insert: {
           amount: number
-          category?: string | null
+          category_id?: number | null
           created_at?: string
           description?: string | null
           due_date?: number | null
@@ -32,7 +60,7 @@ export interface Database {
         }
         Update: {
           amount?: number
-          category?: string | null
+          category_id?: number | null
           created_at?: string
           description?: string | null
           due_date?: number | null
@@ -41,6 +69,12 @@ export interface Database {
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "transactions_category_id_fkey"
+            columns: ["category_id"]
+            referencedRelation: "categories"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "transactions_user_id_fkey"
             columns: ["user_id"]

@@ -1,11 +1,22 @@
 import { Alert, Box, Button, Flex, Paper, Skeleton, Text } from "@mantine/core";
 import { openModal } from "@mantine/modals";
-import { AlertTriangle, Info, Plus } from "react-feather";
+import { AlertTriangle, ExternalLink, Info, Plus } from "react-feather";
 import AddTransactionModal from "./AddTransactionModal/AddTransactionModal";
 import useGlobalStore from "../../store/useGlobalStore";
 import { formatToUSD } from "../../helpers/formatToTwoDecimalPlaces";
+import { Link } from "react-router-dom";
 
-const TransactionHistory = (): JSX.Element => {
+interface ITransaction {
+  maxTransactions: number;
+  title: string;
+  hideSeeAll?: boolean;
+}
+
+const TransactionHistory = ({
+  maxTransactions,
+  title = "Transaction History",
+  hideSeeAll = false,
+}: ITransaction): JSX.Element => {
   const {
     app: { isLoadingTransactions },
     transactions,
@@ -52,31 +63,38 @@ const TransactionHistory = (): JSX.Element => {
     }
 
     return (
-      <Paper p={15} mt={20} withBorder>
-        {transactions.map((transaction) => {
+      <div>
+        {transactions.slice(0, maxTransactions).map((transaction) => {
           return (
-            <Box>
-              <Flex>
-                <Box mr={10}>
-                  <Text color="red">-{formatToUSD(transaction.amount)}</Text>
-                </Box>
-
+            <Paper p={10} mt={10}>
+              <Flex justify="space-between">
                 <div>
                   <Text size={18} weight="bold">
                     {transaction.name}
                   </Text>
-                  <p>{transaction.description}</p>
+                  <Text size={12}>{transaction.description}</Text>
                 </div>
+                <Box mr={10}>
+                  <Text color="red">-{formatToUSD(transaction.amount)}</Text>
+                </Box>
               </Flex>
-            </Box>
+            </Paper>
           );
         })}
-      </Paper>
+        {!hideSeeAll && transactions.length > 5 && (
+          <Flex justify="center" mt={20}>
+            <Link to="/history">
+              <Button leftIcon={<ExternalLink size={14} />}>See All</Button>
+            </Link>
+          </Flex>
+        )}
+      </div>
     );
   };
 
   return (
     <div>
+      <Text size={32}>{title}</Text>
       <Button
         onClick={() => {
           openModal({
