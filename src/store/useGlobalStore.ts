@@ -22,12 +22,13 @@ interface IApp {
   registerUserActiveStep: number;
 }
 
-interface IMeta {
-  totalExpenses: number;
+interface ITransactions extends IDatabaseTransactions {
+  amount: number;
+  category: IDatabaseCategories;
 }
 
-interface ITransactions extends IDatabaseTransactions {
-  category: IDatabaseCategories;
+interface IMeta { 
+  totalExpenses: number;
 }
 
 export interface IUser {
@@ -43,16 +44,16 @@ interface IGlobalStateValues {
   preferences: IPreferences;
   app: IApp;
   user: IUser;
-  transactions: ITransactions[];
   meta: IMeta;
+  transactions: ITransactions[];
   categories: IDatabaseCategories[];
 }
 
 export interface IGlobalState extends IGlobalStateValues {
+  setMeta: (state: Partial<IMeta>) => void;
   setPreferences: (state: Partial<IPreferences>) => void;
   setApp: (state: Partial<IApp>) => void;
   setUser: (state: Partial<IUser>) => void;
-  setMeta: (state: Partial<IMeta>) => void;
   setTransactions: (state: ITransactions[]) => void;
   setCategories: (state: IDatabaseCategories[]) => void;
   fetchTransactions: ({
@@ -101,17 +102,12 @@ const useGlobalStore = create<IGlobalState>()(
       (set) => ({
         ...initialState,
         fetchTransactions: async ({ supabase }): Promise<void> => {
-          set((state) => ({
-            app: {
-              ...state.app,
-              isLoadingTransactions: true,
-            },
-          }));
-
           const { data, error } = await supabase
             .from("transactions")
             .select("*, category:category_id(*)")
             .order("created_at", { ascending: false });
+
+            console.log(data)
 
           if (error) {
             return showNotification({
@@ -121,13 +117,21 @@ const useGlobalStore = create<IGlobalState>()(
           }
 
           set((state) => ({
-            transactions: data,
             app: {
               ...state.app,
               isLoadingTransactions: false,
             },
           }));
         },
+        setMeta(newState) {
+          set((state) => ({
+            meta: {
+              ...state.meta,
+              ...newState,
+            },
+          }));
+        },
+
         fetchCategories: async ({ supabase }): Promise<void> => {
           set((state) => ({
             app: {
@@ -186,14 +190,6 @@ const useGlobalStore = create<IGlobalState>()(
           set((state) => ({
             app: {
               ...state.app,
-              ...newApp,
-            },
-          }));
-        },
-        setMeta: (newApp): void => {
-          set((state) => ({
-            meta: {
-              ...state.meta,
               ...newApp,
             },
           }));
