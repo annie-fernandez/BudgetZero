@@ -10,12 +10,12 @@ import Stats from "../../../components/Stats/Stats";
 
 const Dashboard = () => {
   const {
-    user: { grossSalary },
+    user: { grossIncome },
   } = useGlobalStore();
 
-  if (!grossSalary) return null;
+  if (!grossIncome) return null;
 
-  const yearlyGrossIncome = formatToUSD(grossSalary);
+  const yearlyGrossIncome = formatToUSD(grossIncome);
   // const monthlyGrossIncome = formatToUSD(grossIncome / 12);
   // const monthlyNetIncome = formatToUSD(grossIncome / 12 * taxRate);
 

@@ -11,7 +11,8 @@ import React, { useState } from "react";
 import { ArrowRight } from "react-feather";
 import { useForm } from "react-hook-form";
 import { Database } from "../../../../types/database.types";
-import useGlobalStore from "../../../store/useGlobalStore";
+import { showNotification } from "@mantine/notifications";
+import { closeAllModals } from "@mantine/modals";
 
 interface IFormValues {
   name: string;
@@ -23,10 +24,10 @@ interface IFormValues {
 const AddTransactionModal = (): JSX.Element => {
   const supabase = useSupabaseClient<Database>();
   const session = useSession();
-  const { user } = useGlobalStore();
 
   const [isRecurring, setIsRecurring] = React.useState(false);
   const [dueDate, setDueDate] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
   const {
@@ -36,17 +37,28 @@ const AddTransactionModal = (): JSX.Element => {
   } = useForm<IFormValues>({});
 
   const onSubmit = handleSubmit(async (data) => {
-    if (user.uid === null) return;
+    if (session?.user.id === null) return;
 
-    const { data: resData, error: resError } = await supabase
-      .from("transactions")
-      .insert({
-        user_id: session?.user.id,
-        name: data.name || "",
-        amount: data.amount || "",
-        description: data.description || "",
-        due_date: dueDate || null,
+    setIsLoading(true);
+
+    const { error: resError } = await supabase.from("transactions").insert({
+      amount: data.amount,
+      name: data.name || "",
+      user_id: session?.user.id || "",
+      description: data.description || "",
+      due_date: dueDate ? parseInt(dueDate) : null,
+    });
+
+    setIsLoading(false);
+
+    if (resError) {
+      return showNotification({
+        title: "Error",
+        message: "Something went wrong",
       });
+    }
+
+    closeAllModals();
   });
 
   return (
@@ -55,7 +67,7 @@ const AddTransactionModal = (): JSX.Element => {
         {...register("name", {
           required: "Transaction name is required",
           minLength: {
-            value: 5,
+            value: 1,
             message: "At least 5 letters",
           },
         })}
@@ -67,14 +79,9 @@ const AddTransactionModal = (): JSX.Element => {
       />
       <TextInput
         mt={10}
-        {...register("description", {
-          minLength: {
-            value: 5,
-            message: "At least 5 letters",
-          },
-        })}
+        {...register("description")}
         description="Brief description of this transaction"
-        error={errors.name?.message}
+        error={errors.description?.message}
         label="Description"
         placeholder="This was too much money"
       />
@@ -121,8 +128,12 @@ const AddTransactionModal = (): JSX.Element => {
       )}
       <Divider mb={20} mt={20} />
       <Flex justify="end">
-        <Button rightIcon={<ArrowRight size={16} />} type="submit">
-          Next
+        <Button
+          loading={isLoading}
+          rightIcon={<ArrowRight size={16} />}
+          type="submit"
+        >
+          Add Transaction
         </Button>
       </Flex>
     </form>

@@ -12,27 +12,30 @@ export interface Database {
       transactions: {
         Row: {
           amount: number
+          category: string | null
           created_at: string
           description: string | null
-          due_date: number
+          due_date: number | null
           id: number
           name: string
           user_id: string
         }
         Insert: {
           amount: number
+          category?: string | null
           created_at?: string
           description?: string | null
-          due_date: number
+          due_date?: number | null
           id?: number
           name: string
           user_id: string
         }
         Update: {
           amount?: number
+          category?: string | null
           created_at?: string
           description?: string | null
-          due_date?: number
+          due_date?: number | null
           id?: number
           name?: string
           user_id?: string
@@ -41,16 +44,16 @@ export interface Database {
           {
             foreignKeyName: "transactions_user_id_fkey"
             columns: ["user_id"]
-            referencedRelation: "user_profile"
+            referencedRelation: "users"
             referencedColumns: ["id"]
           }
         ]
       }
-      user_profile: {
+      users: {
         Row: {
           created_at: string
           email: string
-          gross_salary: number
+          gross_income: number
           id: string
           image_url: string | null
           name: string
@@ -59,8 +62,8 @@ export interface Database {
         Insert: {
           created_at?: string
           email: string
-          gross_salary: number
-          id?: string
+          gross_income: number
+          id: string
           image_url?: string | null
           name: string
           register_complete?: boolean
@@ -68,13 +71,20 @@ export interface Database {
         Update: {
           created_at?: string
           email?: string
-          gross_salary?: number
+          gross_income?: number
           id?: string
           image_url?: string | null
           name?: string
           register_complete?: boolean
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "users_id_fkey"
+            columns: ["id"]
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
       }
     }
     Views: {

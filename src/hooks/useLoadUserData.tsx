@@ -31,7 +31,7 @@ const useLoadUserData = () => {
     if (!session) return;
 
     const { data, error } = await supabase
-      .from("user_profile")
+      .from("users")
       .select("*")
       .eq("id", session?.user.id)
       .single();
@@ -51,7 +51,7 @@ const useLoadUserData = () => {
       imageUrl: data?.image_url,
       registerComplete: data?.register_complete,
       uid: data?.id,
-      grossSalary: data?.gross_salary,
+      grossIncome: data?.gross_income,
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
