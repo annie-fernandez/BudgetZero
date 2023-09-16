@@ -50,7 +50,7 @@ function App() {
           colorScheme:
             preferences.theme === "system" ? colorScheme : preferences.theme,
           primaryColor: "green",
-          defaultRadius: "xs",
+          defaultRadius: "md",
           colors: {
             // override dark colors to change them for all components
             dark: [

@@ -1,5 +1,14 @@
-import { createStyles, Progress, Box, Text, Group, Paper, SimpleGrid, rem } from '@mantine/core';
-import { IconArrowUpRight, IconDeviceAnalytics } from '@tabler/icons-react';
+import {
+  createStyles,
+  Progress,
+  Box,
+  Text,
+  Group,
+  Paper,
+  SimpleGrid,
+  rem,
+} from "@mantine/core";
+import { IconArrowUpRight, IconDeviceAnalytics } from "@tabler/icons-react";
 
 const useStyles = createStyles((theme) => ({
   progressLabel: {
@@ -20,12 +29,15 @@ const useStyles = createStyles((theme) => ({
 
   diff: {
     fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
   },
 
   icon: {
-    color: theme.colorScheme === 'dark' ? theme.colors.dark[3] : theme.colors.gray[4],
+    color:
+      theme.colorScheme === "dark"
+        ? theme.colors.dark[3]
+        : theme.colors.gray[4],
   },
 }));
 
@@ -50,7 +62,11 @@ export default function Stat({ total, diff, data }: StatsSegmentsProps) {
   }));
 
   const descriptions = data.map((stat) => (
-    <Box key={stat.label} sx={{ borderBottomColor: stat.color }} className={classes.stat}>
+    <Box
+      key={stat.label}
+      sx={{ borderBottomColor: stat.color }}
+      className={classes.stat}
+    >
       <Text tt="uppercase" fz="xs" c="dimmed" fw={700}>
         {stat.label}
       </Text>
@@ -65,7 +81,7 @@ export default function Stat({ total, diff, data }: StatsSegmentsProps) {
   ));
 
   return (
-    <Paper withBorder p="md" radius="md">
+    <Paper withBorder p="md">
       <Group position="apart">
         <Group align="flex-end" spacing="xs">
           <Text fz="xl" fw={700}>
@@ -73,10 +89,18 @@ export default function Stat({ total, diff, data }: StatsSegmentsProps) {
           </Text>
           <Text c="teal" className={classes.diff} fz="sm" fw={700}>
             <span>{diff}%</span>
-            <IconArrowUpRight size="1rem" style={{ marginBottom: rem(4) }} stroke={1.5} />
+            <IconArrowUpRight
+              size="1rem"
+              style={{ marginBottom: rem(4) }}
+              stroke={1.5}
+            />
           </Text>
         </Group>
-        <IconDeviceAnalytics size="1.4rem" className={classes.icon} stroke={1.5} />
+        <IconDeviceAnalytics
+          size="1.4rem"
+          className={classes.icon}
+          stroke={1.5}
+        />
       </Group>
 
       <Text c="dimmed" fz="sm">
@@ -89,7 +113,7 @@ export default function Stat({ total, diff, data }: StatsSegmentsProps) {
         classNames={{ label: classes.progressLabel }}
         mt={40}
       />
-      <SimpleGrid cols={3} breakpoints={[{ maxWidth: 'xs', cols: 1 }]} mt="xl">
+      <SimpleGrid cols={3} breakpoints={[{ maxWidth: "xs", cols: 1 }]} mt="xl">
         {descriptions}
       </SimpleGrid>
     </Paper>
