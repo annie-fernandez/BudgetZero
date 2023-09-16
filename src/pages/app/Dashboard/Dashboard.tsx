@@ -6,7 +6,7 @@ import {
 } from "../../../helpers/formatToTwoDecimalPlaces";
 import { Divider, Grid } from "@mantine/core";
 import TransactionHistory from "../../../components/TransactionHistory/TransactionHistory";
-import Stats from "../../../components/Stats/Stats";
+import IncomeStats from "../../../components/Stats/IncomeStats";
 import Budget from "../Budgets/Budgets";
 
 const Dashboard: React.FC = (): JSX.Element | null => {
@@ -41,7 +41,7 @@ const Dashboard: React.FC = (): JSX.Element | null => {
     <div>
       <Grid>
         <Grid.Col span={6}>
-          <Stats grossTotal={props.grossTotal} total={props.total} diff={props.diff} data={props.data} />
+          <IncomeStats grossTotal={props.grossTotal} total={props.total} diff={props.diff} data={props.data} />
         </Grid.Col>
         <Grid.Col md={6} xs={12}>
           <TransactionHistory title="Recent Transactions" maxTransactions={5} />
