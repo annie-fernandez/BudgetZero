@@ -54,7 +54,7 @@ const Dashboard = () => {
           <Stats total={props.total} diff={props.diff} data={props.data} />
         </Grid.Col>
         <Grid.Col md={6} xs={12}>
-          <TransactionHistory />
+          <TransactionHistory title="Recent Transactions" maxTransactions={5} />
         </Grid.Col>
       </Grid>
     </div>

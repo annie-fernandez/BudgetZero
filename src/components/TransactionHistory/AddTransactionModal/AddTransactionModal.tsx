@@ -3,16 +3,17 @@ import {
   Checkbox,
   Divider,
   Flex,
+  Loader,
   Select,
   TextInput,
 } from "@mantine/core";
+import { closeAllModals } from "@mantine/modals";
+import { showNotification } from "@mantine/notifications";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import React, { useState } from "react";
 import { ArrowRight } from "react-feather";
 import { useForm } from "react-hook-form";
 import { Database } from "../../../../types/database.types";
-import { showNotification } from "@mantine/notifications";
-import { closeAllModals } from "@mantine/modals";
 import useGlobalStore from "../../../store/useGlobalStore";
 
 interface IFormValues {
@@ -25,7 +26,13 @@ interface IFormValues {
 const AddTransactionModal = (): JSX.Element => {
   const supabase = useSupabaseClient<Database>();
   const session = useSession();
-  const { fetchTransactions } = useGlobalStore();
+  const {
+    fetchTransactions,
+    fetchCategories,
+    categories,
+    app: { isLoadingCategories },
+    setApp,
+  } = useGlobalStore();
 
   const [isRecurring, setIsRecurring] = React.useState(false);
   const [dueDate, setDueDate] = useState<string | null>(null);
@@ -63,6 +70,30 @@ const AddTransactionModal = (): JSX.Element => {
     fetchTransactions({ supabase });
     closeAllModals();
   });
+
+  const handleCreateCategory = async ({ name }: { name: string }) => {
+    setApp({ isLoadingCategories: true });
+
+    const { error: resError } = await supabase.from("categories").insert({
+      name,
+      user_id: session?.user.id || "",
+    });
+
+    if (resError) {
+      setApp({ isLoadingCategories: false });
+
+      console.log(resError);
+
+      return showNotification({
+        title: "Error",
+        message: "Something went wrong",
+      });
+    }
+
+    fetchCategories({ supabase });
+
+    setApp({ isLoadingCategories: false });
+  };
 
   return (
     <form onSubmit={onSubmit}>
@@ -112,6 +143,27 @@ const AddTransactionModal = (): JSX.Element => {
         onChange={(event) => setIsRecurring(event.currentTarget.checked)}
         description="e.g. Bills, Subscription, etc."
         label="Recurring transaction"
+      />
+      <Select
+        withinPortal
+        icon={isLoadingCategories && <Loader size={14} />}
+        disabled={isLoadingCategories}
+        mt={10}
+        label="Categories"
+        description="Select one or more categories"
+        withAsterisk
+        data={categories.map((category) => {
+          return { value: category.name, label: category.name };
+        })}
+        placeholder="Select items"
+        searchable
+        creatable
+        getCreateLabel={(query) => `+ Create new category "${query}"`}
+        onCreate={(query) => {
+          const item = { value: query, label: query };
+          handleCreateCategory({ name: query });
+          return item;
+        }}
       />
       {isRecurring && (
         <Select

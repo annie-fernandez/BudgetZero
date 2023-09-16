@@ -6,6 +6,8 @@ import { showNotification } from "@mantine/notifications";
 
 export type IDatabaseTransactions =
   Database["public"]["Tables"]["transactions"]["Row"];
+export type IDatabaseCategories =
+  Database["public"]["Tables"]["categories"]["Row"];
 
 interface IPreferences {
   theme: string;
@@ -14,18 +16,19 @@ interface IPreferences {
 interface IApp {
   isLoading: boolean;
   isLoadingTransactions: boolean;
+  isLoadingCategories: boolean;
   isNavbarOpen: boolean;
   isSettingsDrawerOpen: boolean;
   registerUserActiveStep: number;
 }
 
-// interface ITransactions {
-//   id: string;
-//   createdAt: string;
-//   amount: number;
-//   description: string;
-//   dueDate: string;
-// }
+interface IMeta {
+  totalExpenses: number;
+}
+
+interface ITransactions extends IDatabaseTransactions {
+  category: IDatabaseCategories;
+}
 
 export interface IUser {
   email: string | null;
@@ -40,15 +43,24 @@ interface IGlobalStateValues {
   preferences: IPreferences;
   app: IApp;
   user: IUser;
-  transactions: IDatabaseTransactions[];
+  transactions: ITransactions[];
+  meta: IMeta;
+  categories: IDatabaseCategories[];
 }
 
 export interface IGlobalState extends IGlobalStateValues {
   setPreferences: (state: Partial<IPreferences>) => void;
   setApp: (state: Partial<IApp>) => void;
   setUser: (state: Partial<IUser>) => void;
-  setTransactions: (state: IDatabaseTransactions[]) => void;
+  setMeta: (state: Partial<IMeta>) => void;
+  setTransactions: (state: ITransactions[]) => void;
+  setCategories: (state: IDatabaseCategories[]) => void;
   fetchTransactions: ({
+    supabase,
+  }: {
+    supabase: SupabaseClient<Database>;
+  }) => void;
+  fetchCategories: ({
     supabase,
   }: {
     supabase: SupabaseClient<Database>;
@@ -60,10 +72,15 @@ export const initialState: IGlobalStateValues = {
   app: {
     isLoading: false,
     isLoadingTransactions: false,
+    isLoadingCategories: false,
     isNavbarOpen: false,
     isSettingsDrawerOpen: false,
     registerUserActiveStep: 0,
   },
+  meta: {
+    totalExpenses: 0,
+  },
+  categories: [],
   transactions: [],
   user: {
     email: null,
@@ -93,7 +110,7 @@ const useGlobalStore = create<IGlobalState>()(
 
           const { data, error } = await supabase
             .from("transactions")
-            .select("*")
+            .select("*, category:category_id(*)")
             .order("created_at", { ascending: false });
 
           if (error) {
@@ -105,6 +122,34 @@ const useGlobalStore = create<IGlobalState>()(
 
           set(() => ({
             transactions: data,
+            app: {
+              ...initialState.app,
+              isLoadingTransactions: false,
+            },
+          }));
+        },
+        fetchCategories: async ({ supabase }): Promise<void> => {
+          set(() => ({
+            app: {
+              ...initialState.app,
+              isLoadingCategories: true,
+            },
+          }));
+
+          const { data, error } = await supabase
+            .from("categories")
+            .select("*")
+            .order("created_at", { ascending: false });
+
+          if (error) {
+            return showNotification({
+              title: "Error",
+              message: error.message,
+            });
+          }
+
+          set(() => ({
+            categories: data,
             app: {
               ...initialState.app,
               isLoadingTransactions: false,
@@ -124,6 +169,11 @@ const useGlobalStore = create<IGlobalState>()(
             transactions: newTransactions,
           }));
         },
+        setCategories: (newCategories): void => {
+          set(() => ({
+            categories: newCategories,
+          }));
+        },
         setUser: (newUser): void => {
           set((state) => ({
             user: {
@@ -136,6 +186,14 @@ const useGlobalStore = create<IGlobalState>()(
           set((state) => ({
             app: {
               ...state.app,
+              ...newApp,
+            },
+          }));
+        },
+        setMeta: (newApp): void => {
+          set((state) => ({
+            meta: {
+              ...state.meta,
               ...newApp,
             },
           }));
