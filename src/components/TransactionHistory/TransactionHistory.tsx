@@ -51,32 +51,28 @@ const TransactionHistory = (): JSX.Element => {
       );
     }
 
-    return (
-      <Paper p={15} mt={20} withBorder>
-        {transactions.map((transaction) => {
-          return (
-            <Box>
-              <Flex>
-                <Box mr={10}>
-                  <Text color="red">-{formatToUSD(transaction.amount)}</Text>
-                </Box>
-
-                <div>
-                  <Text size={18} weight="bold">
-                    {transaction.name}
-                  </Text>
-                  <p>{transaction.description}</p>
-                </div>
-              </Flex>
+    return transactions.map((transaction) => {
+      return (
+        <Paper p={10} mt={10}>
+          <Flex justify="space-between">
+            <div>
+              <Text size={18} weight="bold">
+                {transaction.name}
+              </Text>
+              <Text size={12}>{transaction.description}</Text>
+            </div>
+            <Box mr={10}>
+              <Text color="red">-{formatToUSD(transaction.amount)}</Text>
             </Box>
-          );
-        })}
-      </Paper>
-    );
+          </Flex>
+        </Paper>
+      );
+    });
   };
 
   return (
     <div>
+      <Text size={32}>Transaction History</Text>
       <Button
         onClick={() => {
           openModal({
