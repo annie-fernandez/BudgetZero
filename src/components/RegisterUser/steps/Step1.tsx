@@ -52,6 +52,7 @@ const Step1 = ({ nextStep }: IStepProps): JSX.Element => {
       <TextInput
         {...register("grossIncome", {
           required: "Your income is required",
+          valueAsNumber: true,
           minLength: {
             value: 3,
             message: "At least 100 bucks bro cmon",
@@ -63,6 +64,7 @@ const Step1 = ({ nextStep }: IStepProps): JSX.Element => {
         label="Gross Income"
         placeholder="50000"
         withAsterisk
+        type="number"
       />
       <Divider mb={20} mt={20} />
       <Flex justify="end">

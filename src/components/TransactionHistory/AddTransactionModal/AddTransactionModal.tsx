@@ -85,8 +85,6 @@ const AddTransactionModal = (): JSX.Element => {
     if (resError) {
       setApp({ isLoadingCategories: false });
 
-      console.log(resError);
-
       return showNotification({
         title: "Error",
         message: "Something went wrong",
@@ -165,7 +163,8 @@ const AddTransactionModal = (): JSX.Element => {
             label: category.name,
           };
         })}
-        placeholder="Select items"
+        placeholder="Select or add category"
+        required
         searchable
         creatable
         getCreateLabel={(query) => `+ Create new category "${query}"`}

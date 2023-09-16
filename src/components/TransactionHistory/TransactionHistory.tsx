@@ -82,7 +82,7 @@ const TransactionHistory = ({
                     <Text size={18} weight="bold">
                       {transaction.name}
                     </Text>
-                    <Badge ml={5}>{transaction.category.name}</Badge>
+                    <Badge ml={5}>{transaction?.category?.name}</Badge>
                   </Flex>
 
                   <Text size={12}>{transaction.description}</Text>
