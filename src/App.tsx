@@ -49,8 +49,8 @@ function App() {
           // @ts-ignore
           colorScheme:
             preferences.theme === "system" ? colorScheme : preferences.theme,
-          primaryColor: "red",
-          defaultRadius: "xs",
+          primaryColor: "green",
+          defaultRadius: "md",
           colors: {
             // override dark colors to change them for all components
             dark: [
@@ -70,7 +70,7 @@ function App() {
             Button: {
               defaultProps: {
                 size: "xs",
-                color: "red",
+                color: "green",
               },
             },
             Modal: {

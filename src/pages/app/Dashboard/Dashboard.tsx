@@ -1,7 +1,7 @@
 import React from "react";
 import useGlobalStore from "../../../store/useGlobalStore";
 import {
-//   formatToTwoDecimalPlaces,
+  //   formatToTwoDecimalPlaces,
   formatToUSD,
 } from "../../../helpers/formatToTwoDecimalPlaces";
 import { Grid } from "@mantine/core";
@@ -42,7 +42,7 @@ const Dashboard: React.FC = (): JSX.Element | null => {
         <Grid.Col span={6}>
           <Stats grossTotal={props.grossTotal} total={props.total} diff={props.diff} data={props.data} />
         </Grid.Col>
-        <Grid.Col span={6}>
+        <Grid.Col md={6} xs={12}>
           <TransactionHistory />
         </Grid.Col>
       </Grid>
