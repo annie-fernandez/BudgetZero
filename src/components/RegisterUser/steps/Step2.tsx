@@ -71,7 +71,7 @@ const Step2 = ({ prevStep }: IStepProps): JSX.Element => {
       IMAGE_URL = imageUrlData.publicUrl;
     }
 
-    if (!user.name || !user.grossIncome || !session.user.email) {
+    if (!user.name || !user.grossSalary || !session.user.email) {
       setIsLoadingSavingData(false);
 
       return showNotification({
@@ -80,13 +80,13 @@ const Step2 = ({ prevStep }: IStepProps): JSX.Element => {
       });
     }
 
-    const { error } = await supabase.from("users").insert({
+    const { error } = await supabase.from("user_profile").insert({
       name: user.name,
       register_complete: true,
       email: session.user.email,
       image_url: IMAGE_URL,
       id: session?.user.id,
-      gross_income: user.grossIncome,
+      gross_salary: user.grossSalary,
     });
 
     if (error) {

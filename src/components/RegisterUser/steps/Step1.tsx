@@ -7,7 +7,7 @@ import { IStepProps } from "../RegisterUser";
 
 interface IFormValues {
   name: string;
-  grossIncome: number | null;
+  grossSalary: number | null;
 }
 
 const Step1 = ({ nextStep }: IStepProps): JSX.Element => {
@@ -20,12 +20,12 @@ const Step1 = ({ nextStep }: IStepProps): JSX.Element => {
   } = useForm<IFormValues>({
     defaultValues: {
       name: user.name || "",
-      grossIncome: user.grossIncome || null,
+      grossSalary: user.grossSalary || null,
     },
   });
 
   const onSubmit = handleSubmit((data) => {
-    setUser({ name: data.name, grossIncome: data.grossIncome });
+    setUser({ name: data.name, grossSalary: data.grossSalary });
 
     nextStep();
   });
@@ -50,16 +50,16 @@ const Step1 = ({ nextStep }: IStepProps): JSX.Element => {
       />
       <br />
       <TextInput
-        {...register("grossIncome", {
+        {...register("grossSalary", {
           required: "Your income is required",
           minLength: {
             value: 3,
             message: "At least 100 bucks bro cmon",
           },
         })}
-        defaultValue={user.grossIncome || ""}
+        defaultValue={user.grossSalary || ""}
         description="How much money you make yearly before taxes"
-        error={errors.grossIncome?.message}
+        error={errors.grossSalary?.message}
         label="Gross Income"
         placeholder="50000"
         withAsterisk

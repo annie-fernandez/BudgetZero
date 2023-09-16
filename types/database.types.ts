@@ -14,24 +14,27 @@ export interface Database {
           amount: number
           created_at: string
           description: string | null
-          due_date: string
+          due_date: number
           id: number
+          name: string
           user_id: string
         }
         Insert: {
           amount: number
           created_at?: string
           description?: string | null
-          due_date: string
+          due_date: number
           id?: number
+          name: string
           user_id: string
         }
         Update: {
           amount?: number
           created_at?: string
           description?: string | null
-          due_date?: string
+          due_date?: number
           id?: number
+          name?: string
           user_id?: string
         }
         Relationships: [
@@ -50,6 +53,7 @@ export interface Database {
           gross_salary: number
           id: string
           image_url: string | null
+          name: string
           register_complete: boolean
         }
         Insert: {
@@ -58,6 +62,7 @@ export interface Database {
           gross_salary: number
           id?: string
           image_url?: string | null
+          name: string
           register_complete?: boolean
         }
         Update: {
@@ -66,6 +71,7 @@ export interface Database {
           gross_salary?: number
           id?: string
           image_url?: string | null
+          name?: string
           register_complete?: boolean
         }
         Relationships: []
