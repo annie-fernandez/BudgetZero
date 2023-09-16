@@ -37,7 +37,7 @@ const Header = () => {
               mr="xl"
             />
           </MediaQuery>
-          <Text>Application header</Text>
+          <Text>BudgetZero</Text>
         </div>
         <ActionIcon
           onClick={() => {

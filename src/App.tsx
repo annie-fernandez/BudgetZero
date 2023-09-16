@@ -13,6 +13,7 @@ import { createClient } from "@supabase/supabase-js";
 import constants from "./constants/constants";
 import Root from "./pages/app/root";
 import Dashboard from "./pages/app/Dashboard/Dashboard";
+import History from "./pages/app/History/History";
 
 const supabase = createClient(
   constants.supabaseUrl || "",
@@ -32,6 +33,10 @@ function App() {
         {
           path: "/",
           element: <Dashboard />,
+        },
+        {
+          path: "/history",
+          element: <History />,
         },
       ],
     },

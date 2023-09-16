@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { devtools, persist } from "zustand/middleware";
-import { Database } from "../../types/database.types";
 
 interface IPreferences {
   theme: string;
