@@ -4,9 +4,10 @@ import {
   //   formatToTwoDecimalPlaces,
   formatToUSD,
 } from "../../../helpers/formatToTwoDecimalPlaces";
-import { Grid } from "@mantine/core";
+import { Divider, Grid } from "@mantine/core";
 import TransactionHistory from "../../../components/TransactionHistory/TransactionHistory";
 import Stats from "../../../components/Stats/Stats";
+import Budget from "../Budgets/Budgets";
 
 const Dashboard = () => {
   const {
@@ -57,6 +58,8 @@ const Dashboard = () => {
           <TransactionHistory title="Recent Transactions" maxTransactions={5} />
         </Grid.Col>
       </Grid>
+      <Divider mb={20} mt={40} />
+      <Budget />
     </div>
   );
 };
