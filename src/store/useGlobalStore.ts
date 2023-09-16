@@ -141,7 +141,9 @@ const useGlobalStore = create<IGlobalState>()(
 
           const { data, error } = await supabase
             .from("categories")
-            .select("*")
+            .select(
+              "*, transactions:transactions_id(*), transactions:category_id(*)"
+            )
             .order("created_at", { ascending: false });
 
           if (error) {
