@@ -15,6 +15,8 @@ import { ArrowRight } from "react-feather";
 import { useForm } from "react-hook-form";
 import { Database } from "../../../../types/database.types";
 import useGlobalStore from "../../../store/useGlobalStore";
+import { IconCurrencyDollar } from "@tabler/icons-react";
+import { moneyValidation } from "../../../helpers/formatToTwoDecimalPlaces";
 
 interface IFormValues {
   name: string;
@@ -132,16 +134,21 @@ const AddTransactionModal = (): JSX.Element => {
       />
       <TextInput
         mt={10}
+        icon={<IconCurrencyDollar size={15} />}
         {...register("amount", {
           required: "This transaction's amount is required",
-          pattern: {
-            value: /^\d+(\.\d{1,2})?$/,
-            message: " Maximum two decimal places allowed.",
-          },
+          valueAsNumber: true,
           minLength: {
             value: 1,
             message: "At least 3 characters",
           },
+          validate: (value) => {
+            
+            if (value !== undefined) {
+              const string = value?.toString();
+              return moneyValidation(string) === -1 ? "Incorrect currency format." : true;
+            }
+          }
         })}
         error={errors.amount?.message}
         label="Transaction Amount"
