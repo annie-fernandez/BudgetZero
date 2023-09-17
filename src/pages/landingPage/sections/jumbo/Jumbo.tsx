@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 const useStyles = createStyles((theme) => ({
   inner: {
     display: "flex",
+    alignItems: "center",
     justifyContent: "space-between",
     paddingTop: rem(2),
     paddingBottom: `calc(${theme.spacing.xl} * 4)`,
