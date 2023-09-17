@@ -9,6 +9,8 @@ import { Database } from "../../../../../types/database.types";
 import useGlobalStore, {
   ICategoryWithTransactions,
 } from "../../../../store/useGlobalStore";
+import { moneyValidation } from "../../../../helpers/formatToTwoDecimalPlaces";
+import { IconCurrencyDollar } from "@tabler/icons-react";
 
 interface IFormValues {
   amount: number;
@@ -37,7 +39,7 @@ export default function SetupSpendingBudget({
     if (session?.user.id === null) return;
 
     setIsLoading(true);
-
+    console.log(data.amount)
     const { error: resError } = await supabase
       .from("categories")
       .update({
@@ -66,19 +68,25 @@ export default function SetupSpendingBudget({
       <TextInput
         {...register("amount", {
           required: "A spending budget is required",
-          pattern: {
-            value: /^\d+(\.\d{1,2})?$/,
-            message: " Maximum two decimal places allowed.",
-          },
+          valueAsNumber: true,
           minLength: {
             value: 1,
             message: "At least 1 characters",
           },
+
+          validate: (value) => {
+            if (value !== undefined) {
+              const string = value?.toString();
+              return moneyValidation(string) === -1 ? "Invalid currency format." : true;
+            }
+          },
+         
         })}
         error={errors.amount?.message}
         label="Target amount"
-        placeholder="$500"
+        placeholder="500"
         withAsterisk
+        icon={ <IconCurrencyDollar size={15}/>}
       />
       <Divider mt={20} mb={20} />
       <Flex justify="end">

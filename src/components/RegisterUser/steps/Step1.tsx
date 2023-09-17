@@ -67,7 +67,7 @@ const Step1 = ({ nextStep }: IStepProps): JSX.Element => {
 
             if (value !== undefined) {
               const string = value?.toString();
-              return moneyValidation(string) === -1 ? "Invalid number" : true;
+              return moneyValidation(string) === -1 ? "Invalid currency format." : true;
             }
           },
         })}
