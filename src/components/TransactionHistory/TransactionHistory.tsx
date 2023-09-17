@@ -1,20 +1,10 @@
-import {
-  Alert,
-  Badge,
-  Box,
-  Button,
-  Flex,
-  Paper,
-  Skeleton,
-  Text,
-} from "@mantine/core";
+import { Alert, Button, Flex, Skeleton, Text } from "@mantine/core";
 import { openModal } from "@mantine/modals";
 import { AlertTriangle, ExternalLink, Info, Plus } from "react-feather";
 import { Link } from "react-router-dom";
-import formatDateWithTime from "../../helpers/formatDate";
-import { formatToUSD } from "../../helpers/formatToTwoDecimalPlaces";
 import useGlobalStore from "../../store/useGlobalStore";
 import AddTransactionModal from "./AddTransactionModal/AddTransactionModal";
+import TransactionItem from "./TransactionItem/TransactionItem";
 
 interface ITransaction {
   maxTransactions: number;
@@ -70,28 +60,7 @@ const TransactionHistory = ({
     return (
       <div>
         {transactions.slice(0, maxTransactions).map((transaction) => {
-          return (
-            <Paper p={10} mt={10}>
-              <Flex justify="space-between">
-                <div>
-                  <Flex align="center">
-                    <Text size={18} weight="bold">
-                      {transaction.name}
-                    </Text>
-                    <Badge ml={5}>{transaction?.category?.name}</Badge>
-                  </Flex>
-
-                  <Text size={12}>{transaction.description}</Text>
-                  <Text color="gray" size={12} mt={5}>
-                    {formatDateWithTime(new Date(transaction.created_at))}
-                  </Text>
-                </div>
-                <Box mr={10}>
-                  <Text color="red">-{formatToUSD(transaction.amount)}</Text>
-                </Box>
-              </Flex>
-            </Paper>
-          );
+          return <TransactionItem transaction={transaction} />;
         })}
         {!hideSeeAll && transactions.length > 5 && (
           <Flex justify="center" mt={20}>

@@ -1,15 +1,18 @@
 import {
+  ActionIcon,
   Alert,
   Badge,
   Box,
   Button,
   Divider,
+  Flex,
   Paper,
   Progress,
+  Tooltip,
 } from "@mantine/core";
 import { openModal } from "@mantine/modals";
 import { useEffect, useState } from "react";
-import { AlertTriangle, Plus } from "react-feather";
+import { AlertTriangle, Edit, Plus } from "react-feather";
 import {
   formatToTwoDecimalPlaces,
   formatToUSD,
@@ -47,7 +50,6 @@ const BudgetCategory = ({
               overlayProps: {
                 blur: 5,
               },
-              size: "lg",
             });
           }}
           leftIcon={<Plus size={14} />}
@@ -83,9 +85,33 @@ const BudgetCategory = ({
 
   return (
     <Paper p={15} withBorder>
-      <h3>
-        Category: <Badge>{category.name}</Badge>
-      </h3>
+      <Flex align="center" justify="space-between">
+        <h3>
+          Category: <Badge>{category.name}</Badge>
+        </h3>
+        {category.budget !== null && (
+          <ActionIcon
+            onClick={() => {
+              openModal({
+                title: `Set spending for the ${category.name} category`,
+                children: <SetupSpendingBudget category={category} />,
+                overlayProps: {
+                  blur: 5,
+                },
+              });
+            }}
+          >
+            <Tooltip
+              withArrow
+              withinPortal
+              label={`Edit ${category.name} budget`}
+            >
+              <Edit size={14} />
+            </Tooltip>
+          </ActionIcon>
+        )}
+      </Flex>
+
       <Divider mt={10} />
       <Box mt={10}>
         <p>Budget: {formatToUSD(category.budget || 0)}</p>

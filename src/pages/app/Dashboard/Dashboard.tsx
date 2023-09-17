@@ -14,7 +14,7 @@ const Dashboard: React.FC = (): JSX.Element | null => {
   return (
     <div>
       <Grid>
-        <Grid.Col span={6}>
+        <Grid.Col xs={12} md={6}>
           <IncomeStats />
         </Grid.Col>
         <Grid.Col md={6} xs={12}>
