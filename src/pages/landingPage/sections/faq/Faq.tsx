@@ -112,37 +112,75 @@ export function Faq() {
             >
               <Accordion.Item className={classes.item} value="budget-app">
                 <Accordion.Control>
-                  What is a BudgetZero, and why should I use it?
+                  What is BudgetZero, and why should I use it?
                 </Accordion.Control>
-                <Accordion.Panel>{placeholder}</Accordion.Panel>
+                <Accordion.Panel>
+                  BudgetZero is a tool designed to help individuals manage their
+                  finances effectively. It allows you to track income, expenses,
+                  and financial goals, making budgeting easier and more
+                  efficient. By using BudgetZero, you can gain better control
+                  over your finances, analyze spending habits, save money, and
+                  work towards achieving your financial objectives.
+                </Accordion.Panel>
               </Accordion.Item>
 
               <Accordion.Item className={classes.item} value="secure">
                 <Accordion.Control>
                   Will my financial data be secure?
                 </Accordion.Control>
-                <Accordion.Panel>{placeholder}</Accordion.Panel>
+                <Accordion.Panel>
+                  At BudgetZero, the security of your financial data is a top
+                  priority. We've implemented robust security measures,
+                  including authentication providers like GitHub and Discord, to
+                  ensure the protection of your data. Additionally, our use of
+                  row-level security policies in our PostgreSQL database
+                  guarantees data privacy and security among users.
+                </Accordion.Panel>
               </Accordion.Item>
 
               <Accordion.Item className={classes.item} value="newsletter">
                 <Accordion.Control>
-                Can I set up recurring expenses and income sources?
+                  Can I set up recurring expenses and income sources?
                 </Accordion.Control>
-                <Accordion.Panel>{placeholder}</Accordion.Panel>
+                <Accordion.Panel>
+                  Absolutely! With BudgetZero, setting up recurring expenses is
+                  simple and convenient. Our platform automates the tracking of
+                  regular bills and other financial transactions, streamlining
+                  your budgeting process. This feature helps you stay organized
+                  and ensures that your financial records remain up-to-date
+                  without the need for manual data entry each time.
+                </Accordion.Panel>
               </Accordion.Item>
 
               <Accordion.Item className={classes.item} value="credit-card">
                 <Accordion.Control>
-                Can I customize my budget categories and labels?
+                  Can I customize my budget categories and labels?
                 </Accordion.Control>
-                <Accordion.Panel>{placeholder}</Accordion.Panel>
+                <Accordion.Panel>
+                  Yes, you have complete flexibility to customize your budget
+                  categories and labels with BudgetZero. We understand that
+                  everyone's financial situation is unique, which is why our app
+                  allows you to tailor the experience to your specific needs.
+                  This customization ensures that your budget reflects your
+                  individual spending patterns and financial objectives
+                  accurately.
+                </Accordion.Panel>
               </Accordion.Item>
 
               <Accordion.Item className={classes.item} value="payment">
                 <Accordion.Control>
-                What should I do if I receive income irregularly (e.g., freelancers, gig workers)
+                  What should I do if I receive income irregularly (e.g.,
+                  freelancers, gig workers)
                 </Accordion.Control>
-                <Accordion.Panel>{placeholder}</Accordion.Panel>
+                <Accordion.Panel>
+                  Managing irregular income is a common challenge, and
+                  BudgetZero is here to assist you. To adapt to fluctuating
+                  income, consider averaging your earnings based on historical
+                  data, helping you create a more accurate monthly budget. With
+                  our app's flexible features, you can also adjust your budget
+                  as your income fluctuates, allowing you to maintain financial
+                  stability and effectively work towards your financial goals.
+                </Accordion.Panel>
               </Accordion.Item>
             </Accordion>
           </Container>
