@@ -112,7 +112,7 @@ export function Faq() {
             >
               <Accordion.Item className={classes.item} value="budget-app">
                 <Accordion.Control>
-                  What is a budget app, and why should I use one?
+                  What is a BudgetZero, and why should I use it?
                 </Accordion.Control>
                 <Accordion.Panel>{placeholder}</Accordion.Panel>
               </Accordion.Item>
