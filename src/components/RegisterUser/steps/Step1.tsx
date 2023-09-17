@@ -3,6 +3,7 @@ import { ArrowRight } from "react-feather";
 import { useForm } from "react-hook-form";
 import useGlobalStore from "../../../store/useGlobalStore";
 import { IStepProps } from "../RegisterUser";
+import { IconCurrencyDollar } from "@tabler/icons-react";
 
 interface IFormValues {
   name: string;
@@ -24,6 +25,15 @@ const Step1 = ({ nextStep }: IStepProps): JSX.Element => {
       tax: user.tax || null,
     },
   });
+
+  const moneyFormat = (value: string): number => {
+    const regex = /^\d+(\.\d{1,2})?$/;
+    const isValid = regex.test(value);
+    if (!isValid) {
+      return -1;
+    }
+    return parseFloat(value);
+  };
 
   const onSubmit = handleSubmit((data) => {
     setUser({ name: data.name, grossIncome: data.grossIncome, tax: data.tax });
@@ -58,6 +68,16 @@ const Step1 = ({ nextStep }: IStepProps): JSX.Element => {
             value: 3,
             message: "At least 100 bucks bro cmon",
           },
+          validate: (value) => {
+            if (value === null) {
+              return "Your income is required";
+            }
+
+            if (value !== undefined) {
+              const string = value?.toString();
+              return moneyFormat(string) === -1 ? "Invalid number" : true;
+            }
+          },
         })}
         defaultValue={user.grossIncome || ""}
         description="How much money you make yearly before taxes"
@@ -65,7 +85,7 @@ const Step1 = ({ nextStep }: IStepProps): JSX.Element => {
         label="Gross Income"
         placeholder="50000"
         withAsterisk
-        type="number"
+        icon={<IconCurrencyDollar size={15}/>}
       />
       <TextInput
         mt={10}
