@@ -89,27 +89,40 @@ const BudgetCategory = ({
         <h3>
           Category: <Badge>{category.name}</Badge>
         </h3>
-        {category.budget !== null && (
-          <ActionIcon
-            onClick={() => {
-              openModal({
-                title: `Set spending for the ${category.name} category`,
-                children: <SetupSpendingBudget category={category} />,
-                overlayProps: {
-                  blur: 5,
-                },
-              });
-            }}
+        <Flex align="center">
+          <Button
+            // onClick={() => {
+            //   openModal({
+            //     title: `Transactions for ${category.name}`,
+            //     children: <>{category.tr}</>,
+            //   });
+            // }}
+            variant="subtle"
           >
-            <Tooltip
-              withArrow
-              withinPortal
-              label={`Edit ${category.name} budget`}
+            See Transactions
+          </Button>
+          {category.budget !== null && (
+            <ActionIcon
+              onClick={() => {
+                openModal({
+                  title: `Set spending for the ${category.name} category`,
+                  children: <SetupSpendingBudget category={category} />,
+                  overlayProps: {
+                    blur: 5,
+                  },
+                });
+              }}
             >
-              <Edit size={14} />
-            </Tooltip>
-          </ActionIcon>
-        )}
+              <Tooltip
+                withArrow
+                withinPortal
+                label={`Edit ${category.name} budget`}
+              >
+                <Edit size={14} />
+              </Tooltip>
+            </ActionIcon>
+          )}
+        </Flex>
       </Flex>
 
       <Divider mt={10} />
