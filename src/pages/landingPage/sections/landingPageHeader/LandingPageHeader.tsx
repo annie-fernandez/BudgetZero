@@ -9,11 +9,7 @@ import {
 
 const useStyles = createStyles((theme) => ({
   header: {
-    backgroundColor: theme.fn.variant({
-      variant: "filled",
-      color: theme.primaryColor,
-    }).background,
-    borderBottom: 0,
+    borderBottom: "1px solid rgb(50,50,50)",
   },
 
   inner: {
