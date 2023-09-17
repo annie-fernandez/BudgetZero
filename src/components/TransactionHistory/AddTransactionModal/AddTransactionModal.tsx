@@ -15,6 +15,8 @@ import { Save } from "react-feather";
 import { useForm } from "react-hook-form";
 import { Database } from "../../../../types/database.types";
 import useGlobalStore, { ITransactions } from "../../../store/useGlobalStore";
+import { IconCurrencyDollar } from "@tabler/icons-react";
+import { moneyValidation } from "../../../helpers/formatToTwoDecimalPlaces";
 
 interface IFormValues {
   name: string;
