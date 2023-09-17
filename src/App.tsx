@@ -3,10 +3,7 @@ import { MantineProvider } from "@mantine/core";
 import { useColorScheme } from "@mantine/hooks";
 import { ModalsProvider, openModal } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
-import {
-  SpotlightAction,
-  SpotlightProvider,
-} from "@mantine/spotlight";
+import { SpotlightAction, SpotlightProvider } from "@mantine/spotlight";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { createClient } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
@@ -16,13 +13,13 @@ import "./App.css";
 import LoadingOverlay from "./components/LoadingOverlay/LoadingOverlay";
 import AddTransactionModal from "./components/TransactionHistory/AddTransactionModal/AddTransactionModal";
 import constants from "./constants/constants";
+import { formatToUSD } from "./helpers/formatToTwoDecimalPlaces";
 import Error404 from "./pages/404/Error404";
 import Dashboard from "./pages/app/Dashboard/Dashboard";
 import History from "./pages/app/History/History";
 import Root from "./pages/app/root";
 import LandingPage from "./pages/landingPage/LandingPage";
 import useGlobalStore from "./store/useGlobalStore";
-import { formatToUSD } from "./helpers/formatToTwoDecimalPlaces";
 
 const supabase = createClient(
   constants.supabaseUrl || "",
@@ -64,11 +61,11 @@ function App() {
               children: <AddTransactionModal />,
               overlayProps: {
                 blur: 5,
-              }
-            })
-          }
-        }
-      ]
+              },
+            });
+          },
+        },
+      ];
       setActions(actions);
     }
   }, [transactions]);
