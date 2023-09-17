@@ -29,6 +29,7 @@ const AddTransactionModal = (): JSX.Element => {
   const {
     fetchTransactions,
     fetchCategories,
+    fetchCategoriesWithTransactions,
     categories,
     app: { isLoadingCategories },
     setApp,
@@ -71,10 +72,9 @@ const AddTransactionModal = (): JSX.Element => {
     }
 
     fetchTransactions({ supabase });
+    fetchCategoriesWithTransactions({ supabase });
     closeAllModals();
   });
-
-  console.log(category);
 
   const handleCreateCategory = async ({ name }: { name: string }) => {
     setApp({ isLoadingCategories: true });

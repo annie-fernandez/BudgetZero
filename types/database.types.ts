@@ -11,18 +11,21 @@ export interface Database {
     Tables: {
       categories: {
         Row: {
+          budget: number | null
           created_at: string
           id: number
           name: string
           user_id: string
         }
         Insert: {
+          budget?: number | null
           created_at?: string
           id?: number
           name: string
           user_id: string
         }
         Update: {
+          budget?: number | null
           created_at?: string
           id?: number
           name?: string
@@ -125,7 +128,10 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_categories_with_transactions: {
+        Args: Record<PropertyKey, never>
+        Returns: Json[]
+      }
     }
     Enums: {
       [_ in never]: never
