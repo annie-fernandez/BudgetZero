@@ -1,6 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
+import { Text } from "@mantine/core";
 import {
   Area,
   AreaChart,
@@ -11,58 +12,10 @@ import {
   YAxis,
 } from "recharts";
 import useGlobalStore from "../../../../store/useGlobalStore";
-import { Text } from "@mantine/core";
+import { getGraphDataEachDay } from "../helpers/getGraphDataEachDay";
 
 const SpentEachDay = () => {
   const { transactions } = useGlobalStore();
-
-  const getGraphData = () => {
-    const groupedByDay = transactions.reduce((acc, transaction) => {
-      const date = new Date(transaction.created_at);
-      const dayKey = `${date.getUTCFullYear()}-${
-        date.getUTCMonth() + 1
-      }-${date.getUTCDate()}`;
-
-      if (!acc[dayKey]) {
-        acc[dayKey] = { totalAmount: 0, count: 0 };
-      }
-
-      acc[dayKey].totalAmount += transaction.amount;
-      acc[dayKey].count += 1;
-
-      return acc;
-    }, {});
-
-    const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-
-    // Convert grouped data into desired graph format
-    const graphData = Object.keys(groupedByDay).map((dayKey) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const [year, month, dayOfMonth] = dayKey.split("-");
-      const formattedName = `${monthNames[parseInt(month) - 1]} ${dayOfMonth}`;
-      return {
-        name: formattedName,
-        uv: groupedByDay[dayKey].count,
-        pv: groupedByDay[dayKey].count * 2, // Sample calculation, adjust as needed
-        amt: groupedByDay[dayKey].totalAmount,
-      };
-    });
-
-    return graphData.toReversed();
-  };
 
   return (
     <div style={{ height: 300 }}>
@@ -70,7 +23,7 @@ const SpentEachDay = () => {
         <AreaChart
           width={500}
           height={300}
-          data={getGraphData()}
+          data={getGraphDataEachDay({ transactions })}
           margin={{
             top: 10,
             right: 30,

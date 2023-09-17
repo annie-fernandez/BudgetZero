@@ -1,4 +1,4 @@
-import { Box, Grid, Tabs } from "@mantine/core";
+import { Alert, Box, Grid, Tabs } from "@mantine/core";
 import React from "react";
 import { DollarSign, PieChart } from "react-feather";
 import IncomeStats from "../../../components/Stats/IncomeStats";
@@ -6,8 +6,11 @@ import TransactionHistory from "../../../components/TransactionHistory/Transacti
 import Budget from "../Budgets/Budgets";
 import SpentEachDay from "../Graphs/SpentEachDay/SpentEachDay";
 import SpentOvertime from "../Graphs/SpentOverTime/SpentOverTime";
+import useGlobalStore from "../../../store/useGlobalStore";
 
 const Dashboard: React.FC = (): JSX.Element | null => {
+  const { transactions } = useGlobalStore();
+
   return (
     <div>
       <Grid>
@@ -36,14 +39,21 @@ const Dashboard: React.FC = (): JSX.Element | null => {
         </Tabs.Panel>
 
         <Tabs.Panel value="visuals" pt="xs">
-          <Grid>
-            <Grid.Col span={6}>
-              <SpentEachDay />
-            </Grid.Col>
-            <Grid.Col md={6} xs={12}>
-              <SpentOvertime />
-            </Grid.Col>
-          </Grid>
+          {transactions.length <= 3 ? (
+            <Alert title="Not enough data">
+              You currently don't have enough data to be displayed. Start adding
+              transactions and you'll see they graphed here over time!
+            </Alert>
+          ) : (
+            <Grid>
+              <Grid.Col span={6}>
+                <SpentEachDay />
+              </Grid.Col>
+              <Grid.Col md={6} xs={12}>
+                <SpentOvertime />
+              </Grid.Col>
+            </Grid>
+          )}
         </Tabs.Panel>
       </Tabs>
       <Box mt={100} />

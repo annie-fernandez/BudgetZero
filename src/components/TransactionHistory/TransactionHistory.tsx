@@ -48,12 +48,7 @@ const TransactionHistory = ({
 
     if (transactions && transactions.length === 0) {
       return (
-        <Alert
-          title="No transactions yet"
-          color="blue"
-          mt={20}
-          icon={<Info size={14} />}
-        >
+        <Alert title="No transactions yet" mt={20} icon={<Info size={14} />}>
           You have no transactions yet. Click the button above to add a new
         </Alert>
       );
