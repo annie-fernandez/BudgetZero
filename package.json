@@ -28,6 +28,7 @@
     "react-feather": "^2.0.10",
     "react-hook-form": "^7.45.4",
     "react-router-dom": "^6.8.2",
+    "recharts": "^2.8.0",
     "zustand": "^4.4.1"
   },
   "devDependencies": {
