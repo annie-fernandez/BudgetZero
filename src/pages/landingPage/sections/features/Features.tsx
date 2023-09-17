@@ -1,5 +1,5 @@
 import { createStyles, Text, SimpleGrid, Container, rem } from "@mantine/core";
-import { IconTruck, IconCertificate, IconCoin } from "@tabler/icons-react";
+import { DollarSign, Lock, PieChart } from "react-feather";
 
 const useStyles = createStyles((theme) => ({
   feature: {
@@ -36,61 +36,8 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-interface FeatureProps extends React.ComponentPropsWithoutRef<"div"> {
-  icon: React.FC<any>;
-  title: string;
-  description: string;
-}
-
-function Feature({
-  icon: Icon,
-  title,
-  description,
-  className,
-  ...others
-}: FeatureProps) {
-  const { classes, cx } = useStyles();
-
-  return (
-    <div className={cx(classes.feature, className)} {...others}>
-      <div className={classes.overlay} />
-
-      <div className={classes.content}>
-        <Icon size={rem(38)} className={classes.icon} stroke={1.5} />
-        <Text fw={700} fz="lg" mb="xs" mt={5} className={classes.title}>
-          {title}
-        </Text>
-        <Text c="dimmed" fz="sm">
-          {description}
-        </Text>
-      </div>
-    </div>
-  );
-}
-
-const mockdata = [
-  {
-    icon: IconTruck,
-    title: "Security",
-    description:
-      "Secure user registration and login processes, with multiple sign in options for a safe authentication",
-  },
-  {
-    icon: IconCertificate,
-    title: "Graphs and Charts",
-    description:
-      "Illustrates your expense journey through visually appealing charts to track spending patterns over time.",
-  },
-  {
-    icon: IconCoin,
-    title: "Income and Expense Tracking",
-    description:
-      "Categorize and analyze expenses into specific categories to help users understand where their money is going",
-  },
-];
-
 export function Features() {
-  const items = mockdata.map((item) => <Feature {...item} key={item.title} />);
+  const { classes, cx } = useStyles();
 
   return (
     <Container mt={100} mb={30} size="lg">
@@ -99,7 +46,48 @@ export function Features() {
         breakpoints={[{ maxWidth: "sm", cols: 1 }]}
         spacing={50}
       >
-        {items}
+        <div className={cx(classes.feature)}>
+          <div className={classes.overlay} />
+
+          <div className={classes.content}>
+            <Lock size={28} className={classes.icon} />
+            <Text fw={700} fz="lg" mb="xs" mt={5} className={classes.title}>
+              Security
+            </Text>
+            <Text c="dimmed" fz="sm">
+              Secure user registration and login processes, with multiple sign
+              in options for a safe authentication
+            </Text>
+          </div>
+        </div>
+        <div className={cx(classes.feature)}>
+          <div className={classes.overlay} />
+
+          <div className={classes.content}>
+            <PieChart size={28} className={classes.icon} />
+            <Text fw={700} fz="lg" mb="xs" mt={5} className={classes.title}>
+              Graphs and Charts
+            </Text>
+            <Text c="dimmed" fz="sm">
+              Illustrates your expense journey through visually appealing charts
+              to track spending patterns over time.
+            </Text>
+          </div>
+        </div>
+        <div className={cx(classes.feature)}>
+          <div className={classes.overlay} />
+
+          <div className={classes.content}>
+            <DollarSign size={28} className={classes.icon} />
+            <Text fw={700} fz="lg" mb="xs" mt={5} className={classes.title}>
+              Income and Expense Tracking
+            </Text>
+            <Text c="dimmed" fz="sm">
+              Categorize and analyze expenses into specific categories to help
+              users understand where their money is going.
+            </Text>
+          </div>
+        </div>
       </SimpleGrid>
     </Container>
   );

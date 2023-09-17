@@ -13,7 +13,7 @@ const useLoadUserData = () => {
   const { handleSignout } = useHandleSignout();
   const s = useSession();
 
-  const { setUser, setApp } = useGlobalStore();
+  const { setUser, setApp, clearState } = useGlobalStore();
 
   const getUserSession = useCallback(async () => {
     const {
@@ -37,6 +37,10 @@ const useLoadUserData = () => {
       .single();
 
     if (error || !data) {
+      setApp({
+        isLoading: false,
+      });
+
       setUser({
         registerComplete: false,
         uid: null,
@@ -55,11 +59,18 @@ const useLoadUserData = () => {
       tax: data.tax,
     });
 
+    setApp({
+      isLoading: false,
+    });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (!s) return;
+    if (!s) {
+      clearState();
+      return;
+    }
 
     setApp({
       isLoading: true,
