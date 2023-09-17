@@ -153,9 +153,9 @@ const BudgetCategory = ({
           <Text mr={5}>Leftover: </Text>{" "}
           <Text fw={800} color="green">
             {formatToUSD(
-              category.budget || 0 - totalSpent < 0
+              (category.budget || 0) - totalSpent < 0
                 ? 0
-                : category.budget || 0 - totalSpent
+                : (category.budget || 0) - totalSpent
             )}
           </Text>{" "}
         </Flex>
