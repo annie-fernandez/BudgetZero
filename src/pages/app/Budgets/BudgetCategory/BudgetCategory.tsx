@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-import { ICategoryWithTransactions } from "../../../../store/useGlobalStore";
 import {
   Alert,
   Badge,
@@ -8,47 +6,16 @@ import {
   Divider,
   Paper,
   Progress,
-  createStyles,
-  rem,
 } from "@mantine/core";
+import { openModal } from "@mantine/modals";
+import { useEffect, useState } from "react";
+import { AlertTriangle, Plus } from "react-feather";
 import {
   formatToTwoDecimalPlaces,
   formatToUSD,
 } from "../../../../helpers/formatToTwoDecimalPlaces";
-import { AlertTriangle, Plus } from "react-feather";
-import { openModal } from "@mantine/modals";
+import { ICategoryWithTransactions } from "../../../../store/useGlobalStore";
 import SetupSpendingBudget from "../SetupSpendingBudget/SetupSpendingBudget";
-
-const useStyles = createStyles((theme) => ({
-  progressLabel: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    lineHeight: 1,
-    fontSize: theme.fontSizes.sm,
-  },
-
-  stat: {
-    borderBottom: `${rem(1)} solid`,
-    paddingBottom: rem(1),
-  },
-
-  statCount: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    lineHeight: 1.3,
-  },
-
-  diff: {
-    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
-    display: "flex",
-    alignItems: "center",
-  },
-
-  icon: {
-    color:
-      theme.colorScheme === "dark"
-        ? theme.colors.dark[3]
-        : theme.colors.gray[4],
-  },
-}));
 
 const BudgetCategory = ({
   category,
