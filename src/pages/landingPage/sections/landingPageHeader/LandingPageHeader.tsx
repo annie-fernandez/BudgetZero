@@ -9,7 +9,9 @@ import {
 
 const useStyles = createStyles((theme) => ({
   header: {
-    borderBottom: "1px solid rgb(50,50,50)",
+    borderBottom: `1px solid ${
+      theme.colorScheme === "dark" ? theme.colors.dark[4] : theme.colors.gray[2]
+    }`,
   },
 
   inner: {
