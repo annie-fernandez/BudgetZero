@@ -10,13 +10,11 @@ import {
 import { closeAllModals } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
-import React, { useState } from "react";
-import { ArrowRight } from "react-feather";
+import React, { useEffect, useState } from "react";
+import { Save } from "react-feather";
 import { useForm } from "react-hook-form";
 import { Database } from "../../../../types/database.types";
-import useGlobalStore from "../../../store/useGlobalStore";
-import { IconCurrencyDollar } from "@tabler/icons-react";
-import { moneyValidation } from "../../../helpers/formatToTwoDecimalPlaces";
+import useGlobalStore, { ITransactions } from "../../../store/useGlobalStore";
 
 interface IFormValues {
   name: string;
@@ -25,7 +23,11 @@ interface IFormValues {
   dueDate: string | null;
 }
 
-const AddTransactionModal = (): JSX.Element => {
+interface Props {
+  transaction?: ITransactions;
+}
+
+const AddTransactionModal = ({ transaction }: Props): JSX.Element => {
   const supabase = useSupabaseClient<Database>();
   const session = useSession();
   const {
@@ -44,11 +46,24 @@ const AddTransactionModal = (): JSX.Element => {
 
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
+  useEffect(() => {
+    if (transaction?.category_id) {
+      setCategory(transaction.category_id.toString());
+    }
+  }, [transaction]);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormValues>({});
+  } = useForm<IFormValues>({
+    defaultValues: {
+      name: transaction?.name || "",
+      amount: transaction?.amount || undefined,
+      description: transaction?.description || "",
+      dueDate: transaction?.due_date?.toString() || null,
+    },
+  });
 
   const onSubmit = handleSubmit(async (data) => {
     if (session?.user.id === null) return;
@@ -212,12 +227,8 @@ const AddTransactionModal = (): JSX.Element => {
       )}
       <Divider mb={20} mt={20} />
       <Flex justify="end">
-        <Button
-          loading={isLoading}
-          rightIcon={<ArrowRight size={16} />}
-          type="submit"
-        >
-          Add Transaction
+        <Button loading={isLoading} leftIcon={<Save size={16} />} type="submit">
+          Save transaction
         </Button>
       </Flex>
     </form>
