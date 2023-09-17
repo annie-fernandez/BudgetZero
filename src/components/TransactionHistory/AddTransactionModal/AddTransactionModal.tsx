@@ -4,6 +4,7 @@ import {
   Divider,
   Flex,
   Loader,
+  Popover,
   Select,
   TextInput,
 } from "@mantine/core";
@@ -11,7 +12,7 @@ import { closeAllModals } from "@mantine/modals";
 import { showNotification } from "@mantine/notifications";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import React, { useEffect, useState } from "react";
-import { Save } from "react-feather";
+import { Save, Trash } from "react-feather";
 import { useForm } from "react-hook-form";
 import { Database } from "../../../../types/database.types";
 import useGlobalStore, { ITransactions } from "../../../store/useGlobalStore";
@@ -45,6 +46,7 @@ const AddTransactionModal = ({ transaction }: Props): JSX.Element => {
   const [dueDate, setDueDate] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [category, setCategory] = useState<string | null>(null);
+  const [isLoadingDelete, setIsLoadingDelete] = useState(false);
 
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
 
@@ -145,6 +147,33 @@ const AddTransactionModal = ({ transaction }: Props): JSX.Element => {
     fetchCategories({ supabase });
 
     setApp({ isLoadingCategories: false });
+  };
+
+  const handleDelete = async () => {
+    if (session?.user.id === null) return;
+    if (!transaction?.id) return;
+
+    setIsLoadingDelete(true);
+
+    const { error } = await supabase
+      .from("transactions")
+      .delete()
+      .eq("id", transaction?.id);
+
+    if (error) {
+      setIsLoadingDelete(false);
+
+      return showNotification({
+        title: "Error",
+        message: "Something went wrong",
+      });
+    }
+
+    setIsLoadingDelete(false);
+
+    fetchTransactions({ supabase });
+    fetchCategoriesWithTransactions({ supabase });
+    closeAllModals();
   };
 
   return (
@@ -252,6 +281,33 @@ const AddTransactionModal = ({ transaction }: Props): JSX.Element => {
       )}
       <Divider mb={20} mt={20} />
       <Flex justify="end">
+        {transaction && (
+          <Popover width={300} withArrow withinPortal>
+            <Popover.Target>
+              <Button
+                onClick={() => handleDelete()}
+                color="red"
+                leftIcon={<Trash size={14} />}
+                mr={10}
+              >
+                Delete Transaction
+              </Button>
+            </Popover.Target>
+            <Popover.Dropdown>
+              <h5>Are you sure?</h5>
+              <Flex justify="space-between" gap={10} mt={10}>
+                <Button
+                  loading={isLoadingDelete}
+                  onClick={() => handleDelete()}
+                  color="red"
+                  fullWidth
+                >
+                  {isLoadingDelete ? "Deleting..." : "Yes, delete it"}
+                </Button>
+              </Flex>
+            </Popover.Dropdown>
+          </Popover>
+        )}
         <Button loading={isLoading} leftIcon={<Save size={16} />} type="submit">
           Save transaction
         </Button>

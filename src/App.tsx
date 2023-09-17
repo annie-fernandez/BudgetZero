@@ -7,7 +7,7 @@ import { SpotlightAction, SpotlightProvider } from "@mantine/spotlight";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { createClient } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
-import { Search } from "react-feather";
+import { Plus, Search } from "react-feather";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./App.css";
 import LoadingOverlay from "./components/LoadingOverlay/LoadingOverlay";
@@ -31,6 +31,21 @@ function App() {
   const { preferences, transactions } = useGlobalStore();
   const [actions, setActions] = useState<SpotlightAction[]>([]);
 
+  const addNewTransactionAction: SpotlightAction = {
+    title: "Create new transaction",
+    description: "Create a new transaction",
+    icon: <Plus size={16} />,
+    onTrigger: () => {
+      openModal({
+        title: "Create new transaction",
+        children: <AddTransactionModal />,
+        overlayProps: {
+          blur: 5,
+        },
+      });
+    },
+  };
+
   useEffect(() => {
     if (transactions.length > 0) {
       const actions = transactions.map((transaction) => {
@@ -47,25 +62,13 @@ function App() {
             }),
         };
       });
-      setActions(actions);
+
+      setActions([addNewTransactionAction, ...actions]);
     }
 
     if (transactions.length === 0) {
-      const actions: SpotlightAction[] = [
-        {
-          title: "Create new transaction",
-          description: "Create a new transaction",
-          onTrigger: () => {
-            openModal({
-              title: "Create new transaction",
-              children: <AddTransactionModal />,
-              overlayProps: {
-                blur: 5,
-              },
-            });
-          },
-        },
-      ];
+      const actions: SpotlightAction[] = [addNewTransactionAction];
+
       setActions(actions);
     }
   }, [transactions]);

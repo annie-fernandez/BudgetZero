@@ -8,6 +8,7 @@ import {
   Flex,
   Paper,
   Progress,
+  Text,
   Tooltip,
 } from "@mantine/core";
 import { openModal } from "@mantine/modals";
@@ -137,8 +138,27 @@ const BudgetCategory = ({
 
       <Divider mt={10} />
       <Box mt={10}>
-        <p>Budget: {formatToUSD(category.budget || 0)}</p>
-        <p>Total spent: {formatToUSD(totalSpent)}</p>
+        <Flex>
+          <Text mr={5}>Budget:</Text>
+          <Text fw={800}>{formatToUSD(category.budget || 0)}</Text>
+        </Flex>
+
+        <Flex>
+          <Text mr={5}>Total spent:</Text>
+          <Text fw={800} variant="" color="red">
+            {formatToUSD(totalSpent)}
+          </Text>
+        </Flex>
+        <Flex>
+          <Text mr={5}>Leftover: </Text>{" "}
+          <Text fw={800} color="green">
+            {formatToUSD(
+              category.budget || 0 - totalSpent < 0
+                ? 0
+                : category.budget || 0 - totalSpent
+            )}
+          </Text>{" "}
+        </Flex>
         <p>Number of transactions: {category.transactions.length}</p>
       </Box>
       {renderRightComponent()}
