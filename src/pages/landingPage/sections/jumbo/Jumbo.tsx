@@ -96,16 +96,13 @@ export function Jumbo() {
               }
             >
               <List.Item>
-                <b>Enhenced User Experience</b> – smooth and simple User
-                Interface
+                <b>Enhenced User Experience</b> –  Smooth and simple User Interface 
               </List.Item>
               <List.Item>
-                <b>Spotlight Search</b> – search for transactions by price,
-                ammount, description, or name
+                <b>Spotlight Search</b> – Search for transactions by price, ammount, description, or name
               </List.Item>
               <List.Item>
-                <b>Strong Visuals </b> – illustrated history by charts and
-                tables
+                <b>Strong Visuals </b> – Illustrated history by charts and tables 
               </List.Item>
             </List>
 
