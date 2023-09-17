@@ -72,22 +72,44 @@ const AddTransactionModal = ({ transaction }: Props): JSX.Element => {
 
     setIsLoading(true);
 
-    const { error: resError } = await supabase.from("transactions").insert({
-      amount: data.amount,
-      name: data.name || "",
-      user_id: session?.user.id || "",
-      description: data.description || "",
-      due_date: dueDate ? parseInt(dueDate) : null,
-      category_id: category !== null ? parseInt(category) : null,
-    });
+    if (transaction) {
+      const { error: resError } = await supabase
+        .from("transactions")
+        .update({
+          amount: data.amount,
+          name: data.name || "",
+          description: data.description || "",
+          due_date: dueDate ? parseInt(dueDate) : null,
+          category_id: category !== null ? parseInt(category) : null,
+        })
+        .eq("id", transaction.id);
 
-    setIsLoading(false);
+      setIsLoading(false);
 
-    if (resError) {
-      return showNotification({
-        title: "Error",
-        message: "Something went wrong",
+      if (resError) {
+        return showNotification({
+          title: "Error",
+          message: "Something went wrong",
+        });
+      }
+    } else {
+      const { error: resError } = await supabase.from("transactions").insert({
+        amount: data.amount,
+        name: data.name || "",
+        user_id: session?.user.id || "",
+        description: data.description || "",
+        due_date: dueDate ? parseInt(dueDate) : null,
+        category_id: category !== null ? parseInt(category) : null,
       });
+
+      setIsLoading(false);
+
+      if (resError) {
+        return showNotification({
+          title: "Error",
+          message: "Something went wrong",
+        });
+      }
     }
 
     fetchTransactions({ supabase });
@@ -160,12 +182,13 @@ const AddTransactionModal = ({ transaction }: Props): JSX.Element => {
             message: "At least 3 characters",
           },
           validate: (value) => {
-            
             if (value !== undefined) {
               const string = value?.toString();
-              return moneyValidation(string) === -1 ? "Incorrect currency format." : true;
+              return moneyValidation(string) === -1
+                ? "Incorrect currency format."
+                : true;
             }
-          }
+          },
         })}
         error={errors.amount?.message}
         label="Transaction Amount"
