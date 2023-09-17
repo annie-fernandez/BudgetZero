@@ -1,21 +1,26 @@
 import {
   ActionIcon,
-  Burger,
   Flex,
   Header as MantineHeader,
   MediaQuery,
   Text,
-  useMantineTheme,
+  createStyles,
 } from "@mantine/core";
 import useGlobalStore from "../../store/useGlobalStore";
 import SettingsDrawer from "../SettingsDrawer/SettingsDrawer";
 import { Settings } from "react-feather";
 
+const useStyles = createStyles(() => ({
+  logo: {
+    height: 50,
+  },
+}));
+
 const Header = () => {
-  const theme = useMantineTheme();
+
+  const { classes } = useStyles();
 
   const {
-    app: { isNavbarOpen },
     setApp,
   } = useGlobalStore();
 
@@ -24,20 +29,12 @@ const Header = () => {
       <SettingsDrawer />
       <Flex style={{ height: "100%" }} align="center" justify="space-between">
         <div>
-          <MediaQuery largerThan="sm" styles={{ display: "none" }}>
-            <Burger
-              opened={isNavbarOpen}
-              onClick={() =>
-                setApp({
-                  isNavbarOpen: !isNavbarOpen,
-                })
-              }
-              size="sm"
-              color={theme.colors.gray[6]}
-              mr="xl"
-            />
+          <MediaQuery smallerThan={"sm"} styles={{ display: "none" }}>
+            <Flex align="center">
+              <img className={classes.logo} src="/logo.png" />
+              <Text ml={-10}>BudgetZero</Text>
+            </Flex>
           </MediaQuery>
-          <Text>BudgetZero</Text>
         </div>
         <ActionIcon
           onClick={() => {
