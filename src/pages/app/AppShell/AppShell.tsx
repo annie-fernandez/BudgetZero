@@ -1,7 +1,6 @@
 import { AppShell, useMantineTheme } from "@mantine/core";
-import Header from "../../../components/Header/Header";
-import Navbar from "../../../components/Navbar/Navbar";
 import { Outlet } from "react-router";
+import Header from "../../../components/Header/Header";
 
 export default function Shell() {
   const theme = useMantineTheme();
@@ -18,7 +17,6 @@ export default function Shell() {
       }}
       navbarOffsetBreakpoint="sm"
       asideOffsetBreakpoint="sm"
-      navbar={<Navbar />}
       header={<Header />}
     >
       <div style={{ maxWidth: "1200px", margin: "auto" }}>

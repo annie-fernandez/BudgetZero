@@ -1,16 +1,21 @@
 import {
+  ActionIcon,
   Box,
   Flex,
   Group,
   Paper,
   SimpleGrid,
   Text,
+  Tooltip,
   createStyles,
   rem,
 } from "@mantine/core";
 import { IconArrowDownLeft } from "@tabler/icons-react";
 import { formatToUSD } from "../../helpers/formatToTwoDecimalPlaces";
 import useGlobalStore from "../../store/useGlobalStore";
+import { Edit } from "react-feather";
+import { openModal } from "@mantine/modals";
+import EditSalaryAndTaxInformation from "../EditSalaryAndTaxModal/EditSalaryAndTaxModal";
 
 const useStyles = createStyles((theme) => ({
   progressLabel: {
@@ -96,7 +101,24 @@ export default function IncomeStat() {
 
   return (
     <div>
-      <Text size={32}>Salary Insights</Text>
+      <Flex align="center" justify="space-between">
+        <Text size={32}>Salary Insights</Text>
+        <Tooltip withArrow withinPortal label="Edit salary and tax information">
+          <ActionIcon
+            onClick={() => {
+              openModal({
+                title: "Edit Salary and Tax Information",
+                children: <EditSalaryAndTaxInformation />,
+                overlayProps: {
+                  blur: 5,
+                },
+              });
+            }}
+          >
+            <Edit size={14} />
+          </ActionIcon>
+        </Tooltip>
+      </Flex>
       <Paper withBorder p="md" radius="md">
         <Group position="apart">
           <Flex direction={"column"}>
