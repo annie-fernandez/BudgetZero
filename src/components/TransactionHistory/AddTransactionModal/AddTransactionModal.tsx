@@ -161,7 +161,7 @@ const AddTransactionModal = (): JSX.Element => {
         disabled={isLoadingCategories}
         mt={10}
         label="Categories"
-        description="Select one or more categories"
+        description="Create a new category, or enter one you've used before."
         withAsterisk
         value={category}
         onChange={(value) => {

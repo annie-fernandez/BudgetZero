@@ -13,7 +13,7 @@ import {
 import useGlobalStore from "../../../../store/useGlobalStore";
 import { Text } from "@mantine/core";
 
-const SpentOverTime = () => {
+const SpentEachDay = () => {
   const { transactions } = useGlobalStore();
 
   const getGraphData = () => {
@@ -49,25 +49,19 @@ const SpentOverTime = () => {
     ];
 
     // Convert grouped data into desired graph format
-    let accumulatedAmt = 0; // Initialize a variable to keep track of the accumulated amount
-
-    const sortedKeys = Object.keys(groupedByDay).sort(); // Sort the keys
-    const graphData = sortedKeys.map((dayKey) => {
+    const graphData = Object.keys(groupedByDay).map((dayKey) => {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [year, month, dayOfMonth] = dayKey.split("-");
       const formattedName = `${monthNames[parseInt(month) - 1]} ${dayOfMonth}`;
-
-      accumulatedAmt += groupedByDay[dayKey].totalAmount; // Accumulate the amount for each day
-
       return {
         name: formattedName,
         uv: groupedByDay[dayKey].count,
         pv: groupedByDay[dayKey].count * 2, // Sample calculation, adjust as needed
-        amt: accumulatedAmt, // Set the accumulated amount for the graph
+        amt: groupedByDay[dayKey].totalAmount,
       };
     });
 
-    return graphData;
+    return graphData.toReversed();
   };
 
   return (
@@ -92,10 +86,10 @@ const SpentOverTime = () => {
         </AreaChart>
       </ResponsiveContainer>
       <Text align="center" size={12}>
-        Cumulative money spent over time.
+        Money spent each day
       </Text>
     </div>
   );
 };
 
-export default SpentOverTime;
+export default SpentEachDay;

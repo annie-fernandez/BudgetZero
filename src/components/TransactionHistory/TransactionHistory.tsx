@@ -10,10 +10,11 @@ import {
 } from "@mantine/core";
 import { openModal } from "@mantine/modals";
 import { AlertTriangle, ExternalLink, Info, Plus } from "react-feather";
-import AddTransactionModal from "./AddTransactionModal/AddTransactionModal";
-import useGlobalStore from "../../store/useGlobalStore";
-import { formatToUSD } from "../../helpers/formatToTwoDecimalPlaces";
 import { Link } from "react-router-dom";
+import formatDateWithTime from "../../helpers/formatDate";
+import { formatToUSD } from "../../helpers/formatToTwoDecimalPlaces";
+import useGlobalStore from "../../store/useGlobalStore";
+import AddTransactionModal from "./AddTransactionModal/AddTransactionModal";
 
 interface ITransaction {
   maxTransactions: number;
@@ -86,6 +87,9 @@ const TransactionHistory = ({
                   </Flex>
 
                   <Text size={12}>{transaction.description}</Text>
+                  <Text color="gray" size={12} mt={5}>
+                    {formatDateWithTime(new Date(transaction.created_at))}
+                  </Text>
                 </div>
                 <Box mr={10}>
                   <Text color="red">-{formatToUSD(transaction.amount)}</Text>

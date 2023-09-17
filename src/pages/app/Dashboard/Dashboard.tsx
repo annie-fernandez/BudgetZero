@@ -1,14 +1,16 @@
+import { Box, Grid, Tabs } from "@mantine/core";
 import React from "react";
-import useGlobalStore from "../../../store/useGlobalStore";
+import IncomeStats from "../../../components/Stats/IncomeStats";
+import TransactionHistory from "../../../components/TransactionHistory/TransactionHistory";
 import {
   //   formatToTwoDecimalPlaces,
   formatToUSD,
 } from "../../../helpers/formatToTwoDecimalPlaces";
-import { Divider, Grid } from "@mantine/core";
-import TransactionHistory from "../../../components/TransactionHistory/TransactionHistory";
-import IncomeStats from "../../../components/Stats/IncomeStats";
+import useGlobalStore from "../../../store/useGlobalStore";
 import Budget from "../Budgets/Budgets";
+import SpentEachDay from "../Graphs/SpentEachDay/SpentEachDay";
 import SpentOvertime from "../Graphs/SpentOverTime/SpentOverTime";
+import { DollarSign, PieChart } from "react-feather";
 
 const Dashboard: React.FC = (): JSX.Element | null => {
   const {
@@ -70,17 +72,35 @@ const Dashboard: React.FC = (): JSX.Element | null => {
           <TransactionHistory title="Recent Transactions" maxTransactions={5} />
         </Grid.Col>
       </Grid>
-      <Divider mb={20} label="Visualize your spending" />
       <Grid>
-        <Grid.Col span={6}>
-          <SpentOvertime />
-        </Grid.Col>
-        <Grid.Col md={6} xs={12}>
-          {/* <TransactionHistory title="Recent Transactions" maxTransactions={5} /> */}
-        </Grid.Col>
+        <Grid.Col span={6}></Grid.Col>
       </Grid>
-      <Divider label="Budget by category" mb={20} mt={40} />
-      <Budget />
+      <Tabs mt={30} defaultValue="budgets">
+        <Tabs.List mb={20}>
+          <Tabs.Tab icon={<DollarSign size={14} />} value="budgets">
+            Budgets
+          </Tabs.Tab>
+          <Tabs.Tab icon={<PieChart size={14} />} value="visuals">
+            Visuals
+          </Tabs.Tab>
+        </Tabs.List>
+
+        <Tabs.Panel value="budgets" pt="xs">
+          <Budget />
+        </Tabs.Panel>
+
+        <Tabs.Panel value="visuals" pt="xs">
+          <Grid>
+            <Grid.Col span={6}>
+              <SpentEachDay />
+            </Grid.Col>
+            <Grid.Col md={6} xs={12}>
+              <SpentOvertime />
+            </Grid.Col>
+          </Grid>
+        </Tabs.Panel>
+      </Tabs>
+      <Box mt={100} />
     </div>
   );
 };
