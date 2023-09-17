@@ -3,7 +3,10 @@ import { MantineProvider } from "@mantine/core";
 import { useColorScheme } from "@mantine/hooks";
 import { ModalsProvider, openModal } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
-import { SpotlightProvider } from "@mantine/spotlight";
+import {
+  SpotlightAction,
+  SpotlightProvider,
+} from "@mantine/spotlight";
 import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { createClient } from "@supabase/supabase-js";
 import { useEffect, useState } from "react";
@@ -29,8 +32,7 @@ const supabase = createClient(
 function App() {
   const colorScheme = useColorScheme();
   const { preferences, transactions } = useGlobalStore();
-
-  const [actions, setActions] = useState<any>([]);
+  const [actions, setActions] = useState<SpotlightAction[]>([]);
 
   useEffect(() => {
     if (transactions.length > 0) {
@@ -48,7 +50,25 @@ function App() {
             }),
         };
       });
+      setActions(actions);
+    }
 
+    if (transactions.length === 0) {
+      const actions: SpotlightAction[] = [
+        {
+          title: "Create new transaction",
+          description: "Create a new transaction",
+          onTrigger: () => {
+            openModal({
+              title: "Create new transaction",
+              children: <AddTransactionModal />,
+              overlayProps: {
+                blur: 5,
+              }
+            })
+          }
+        }
+      ]
       setActions(actions);
     }
   }, [transactions]);
