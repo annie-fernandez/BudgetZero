@@ -100,7 +100,7 @@ export function Faq() {
 
             <Accordion
               chevronPosition="right"
-              defaultValue="reset-password"
+              defaultValue="budget-app"
               chevronSize={50}
               variant="separated"
               disableChevronRotation
@@ -110,37 +110,37 @@ export function Faq() {
                 </ThemeIcon>
               }
             >
-              <Accordion.Item className={classes.item} value="reset-password">
+              <Accordion.Item className={classes.item} value="budget-app">
                 <Accordion.Control>
-                  How can I reset my password?
+                  What is a budget app, and why should I use one?
                 </Accordion.Control>
                 <Accordion.Panel>{placeholder}</Accordion.Panel>
               </Accordion.Item>
 
-              <Accordion.Item className={classes.item} value="another-account">
+              <Accordion.Item className={classes.item} value="secure">
                 <Accordion.Control>
-                  Can I create more that one account?
+                  Will my financial data be secure?
                 </Accordion.Control>
                 <Accordion.Panel>{placeholder}</Accordion.Panel>
               </Accordion.Item>
 
               <Accordion.Item className={classes.item} value="newsletter">
                 <Accordion.Control>
-                  How can I subscribe to monthly newsletter?
+                Can I set up recurring expenses and income sources?
                 </Accordion.Control>
                 <Accordion.Panel>{placeholder}</Accordion.Panel>
               </Accordion.Item>
 
               <Accordion.Item className={classes.item} value="credit-card">
                 <Accordion.Control>
-                  Do you store credit card information securely?
+                Can I customize my budget categories and labels?
                 </Accordion.Control>
                 <Accordion.Panel>{placeholder}</Accordion.Panel>
               </Accordion.Item>
 
               <Accordion.Item className={classes.item} value="payment">
                 <Accordion.Control>
-                  What payment systems to you work with?
+                What should I do if I receive income irregularly (e.g., freelancers, gig workers)
                 </Accordion.Control>
                 <Accordion.Panel>{placeholder}</Accordion.Panel>
               </Accordion.Item>
