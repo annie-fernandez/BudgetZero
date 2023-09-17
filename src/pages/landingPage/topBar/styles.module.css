@@ -1,0 +1,56 @@
+.top-bar {
+  height: 147px;
+  position: relative;
+  width: 1280px;
+}
+
+.top-bar .overlap-group {
+  height: 83px;
+  left: -4px;
+  position: relative;
+  top: 24px;
+  width: 1284px;
+}
+
+.top-bar .top-bar-px {
+  background-color: #0c8699;
+  border: 1px solid;
+  border-color: #000000;
+  height: 79px;
+  left: 4px;
+  position: absolute;
+  top: 0;
+  width: 1280px;
+}
+
+.top-bar .secondary-CTA {
+  display: block;
+  height: 50px;
+  left: 1067px;
+  position: absolute;
+  top: 15px;
+  width: 175px;
+}
+
+.top-bar .text-wrapper {
+  color: var(--white);
+  font-family: "Poppins-Regular", Helvetica;
+  font-size: 18px;
+  font-weight: 400;
+  height: 32px;
+  left: 957px;
+  letter-spacing: 0;
+  line-height: 32px;
+  position: absolute;
+  text-align: right;
+  top: 22px;
+  width: 68px;
+}
+
+.top-bar .z-photoroom {
+  height: 83px;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 147px;
+}
