@@ -17,6 +17,7 @@ interface IApp {
   isLoading: boolean;
   isLoadingTransactions: boolean;
   isLoadingCategories: boolean;
+  isLoadingCategoriesWithTransactions: boolean;
   isNavbarOpen: boolean;
   isSettingsDrawerOpen: boolean;
   registerUserActiveStep: number;
@@ -25,6 +26,10 @@ interface IApp {
 interface ITransactions extends IDatabaseTransactions {
   amount: number;
   category: IDatabaseCategories;
+}
+
+export interface ICategoryWithTransactions extends IDatabaseCategories {
+  transactions: ITransactions[];
 }
 
 interface IMeta {
@@ -47,6 +52,7 @@ interface IGlobalStateValues {
   meta: IMeta;
   transactions: ITransactions[];
   categories: IDatabaseCategories[];
+  categoriesWithTransactions: IDatabaseCategories[];
 }
 
 export interface IGlobalState extends IGlobalStateValues {
@@ -56,12 +62,18 @@ export interface IGlobalState extends IGlobalStateValues {
   setUser: (state: Partial<IUser>) => void;
   setTransactions: (state: ITransactions[]) => void;
   setCategories: (state: IDatabaseCategories[]) => void;
+  setCategoriesWithTransactions: (state: ICategoryWithTransactions[]) => void;
   fetchTransactions: ({
     supabase,
   }: {
     supabase: SupabaseClient<Database>;
   }) => void;
   fetchCategories: ({
+    supabase,
+  }: {
+    supabase: SupabaseClient<Database>;
+  }) => void;
+  fetchCategoriesWithTransactions: ({
     supabase,
   }: {
     supabase: SupabaseClient<Database>;
@@ -74,6 +86,7 @@ export const initialState: IGlobalStateValues = {
     isLoading: false,
     isLoadingTransactions: false,
     isLoadingCategories: false,
+    isLoadingCategoriesWithTransactions: false,
     isNavbarOpen: false,
     isSettingsDrawerOpen: false,
     registerUserActiveStep: 0,
@@ -83,6 +96,7 @@ export const initialState: IGlobalStateValues = {
   },
   categories: [],
   transactions: [],
+  categoriesWithTransactions: [],
   user: {
     email: null,
     name: null,
@@ -141,9 +155,7 @@ const useGlobalStore = create<IGlobalState>()(
 
           const { data, error } = await supabase
             .from("categories")
-            .select(
-              "*, transactions:transactions_id(*), transactions:category_id(*)"
-            )
+            .select("*")
             .order("created_at", { ascending: false });
 
           if (error) {
@@ -169,6 +181,35 @@ const useGlobalStore = create<IGlobalState>()(
             },
           }));
         },
+        fetchCategoriesWithTransactions: async ({
+          supabase,
+        }): Promise<void> => {
+          set((state) => ({
+            app: {
+              ...state.app,
+              isLoadingCategoriesWithTransactions: true,
+            },
+          }));
+
+          const { data, error } = await supabase.rpc(
+            "get_categories_with_transactions"
+          );
+
+          if (error) {
+            return showNotification({
+              title: "Error",
+              message: error.message,
+            });
+          }
+
+          set((state) => ({
+            categoriesWithTransactions: data,
+            app: {
+              ...state.app,
+              isLoadingCategoriesWithTransactions: false,
+            },
+          }));
+        },
         setTransactions: (newTransactions): void => {
           set(() => ({
             transactions: newTransactions,
@@ -177,6 +218,13 @@ const useGlobalStore = create<IGlobalState>()(
         setCategories: (newCategories): void => {
           set(() => ({
             categories: newCategories,
+          }));
+        },
+        setCategoriesWithTransactions: (
+          newCategoriesWithTransactions
+        ): void => {
+          set(() => ({
+            categoriesWithTransactions: newCategoriesWithTransactions,
           }));
         },
         setUser: (newUser): void => {
