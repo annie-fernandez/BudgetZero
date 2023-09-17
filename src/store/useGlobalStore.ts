@@ -23,7 +23,7 @@ interface IApp {
   registerUserActiveStep: number;
 }
 
-interface ITransactions extends IDatabaseTransactions {
+export interface ITransactions extends IDatabaseTransactions {
   amount: number;
   category: IDatabaseCategories;
 }

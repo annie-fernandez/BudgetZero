@@ -14,6 +14,7 @@ import constants from "./constants/constants";
 import Root from "./pages/app/root";
 import Dashboard from "./pages/app/Dashboard/Dashboard";
 import History from "./pages/app/History/History";
+import LandingPage from "./pages/landingPage/LandingPage";
 
 const supabase = createClient(
   constants.supabaseUrl || "",
@@ -27,15 +28,20 @@ function App() {
   const router = createBrowserRouter([
     {
       path: "/",
+      element: <LandingPage />,
+      errorElement: <Error404 />,
+    },
+    {
+      path: "/app",
       element: <Root />,
       errorElement: <Error404 />,
       children: [
         {
-          path: "/",
+          path: "/app/",
           element: <Dashboard />,
         },
         {
-          path: "/history",
+          path: "/app/history",
           element: <History />,
         },
       ],
