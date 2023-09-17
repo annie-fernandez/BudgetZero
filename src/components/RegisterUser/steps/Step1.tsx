@@ -1,5 +1,4 @@
 import { Button, Divider, Flex, TextInput } from "@mantine/core";
-import React from "react";
 import { ArrowRight } from "react-feather";
 import { useForm } from "react-hook-form";
 import useGlobalStore from "../../../store/useGlobalStore";
@@ -8,6 +7,7 @@ import { IStepProps } from "../RegisterUser";
 interface IFormValues {
   name: string;
   grossIncome: number | null;
+  tax: number | null;
 }
 
 const Step1 = ({ nextStep }: IStepProps): JSX.Element => {
@@ -21,11 +21,12 @@ const Step1 = ({ nextStep }: IStepProps): JSX.Element => {
     defaultValues: {
       name: user.name || "",
       grossIncome: user.grossIncome || null,
+      tax: user.tax || null,
     },
   });
 
   const onSubmit = handleSubmit((data) => {
-    setUser({ name: data.name, grossIncome: data.grossIncome });
+    setUser({ name: data.name, grossIncome: data.grossIncome, tax: data.tax });
 
     nextStep();
   });
@@ -48,8 +49,8 @@ const Step1 = ({ nextStep }: IStepProps): JSX.Element => {
         placeholder="Stephen Smith"
         withAsterisk
       />
-      <br />
       <TextInput
+        mt={10}
         {...register("grossIncome", {
           required: "Your income is required",
           valueAsNumber: true,
@@ -63,6 +64,20 @@ const Step1 = ({ nextStep }: IStepProps): JSX.Element => {
         error={errors.grossIncome?.message}
         label="Gross Income"
         placeholder="50000"
+        withAsterisk
+        type="number"
+      />
+      <TextInput
+        mt={10}
+        {...register("tax", {
+          required: "Your tax is required",
+          valueAsNumber: true,
+        })}
+        defaultValue={user.tax || ""}
+        description="What percent of your salary goes to taxes?"
+        error={errors.tax?.message}
+        label="Tax"
+        placeholder="23"
         withAsterisk
         type="number"
       />

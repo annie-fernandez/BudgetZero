@@ -52,6 +52,7 @@ const useLoadUserData = () => {
       registerComplete: data?.register_complete,
       uid: data?.id,
       grossIncome: data?.gross_income,
+      tax: data.tax,
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

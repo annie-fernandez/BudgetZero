@@ -95,6 +95,7 @@ export interface Database {
           image_url: string | null
           name: string
           register_complete: boolean
+          tax: number | null
         }
         Insert: {
           created_at?: string
@@ -104,6 +105,7 @@ export interface Database {
           image_url?: string | null
           name: string
           register_complete?: boolean
+          tax?: number | null
         }
         Update: {
           created_at?: string
@@ -113,6 +115,7 @@ export interface Database {
           image_url?: string | null
           name?: string
           register_complete?: boolean
+          tax?: number | null
         }
         Relationships: [
           {

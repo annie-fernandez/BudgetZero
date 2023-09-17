@@ -87,6 +87,7 @@ const Step2 = ({ prevStep }: IStepProps): JSX.Element => {
       image_url: IMAGE_URL,
       id: session?.user.id,
       gross_income: user.grossIncome,
+      tax: user.tax,
     });
 
     if (error) {

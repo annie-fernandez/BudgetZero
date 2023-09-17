@@ -43,6 +43,7 @@ export interface IUser {
   registerComplete: boolean | null;
   uid: string | null;
   grossIncome: number | null;
+  tax: number | null;
 }
 
 interface IGlobalStateValues {
@@ -104,6 +105,7 @@ export const initialState: IGlobalStateValues = {
     imageUrl: null,
     registerComplete: false,
     grossIncome: null,
+    tax: null,
   },
   preferences: {
     theme: "system",

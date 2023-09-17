@@ -45,15 +45,15 @@ const AuthUser = (): JSX.Element => {
           variables: {
             default: {
               colors: {
-                brand: theme.colors.indigo[6],
-                brandAccent: theme.colors.indigo[7],
+                brand: theme.colors.cyan[6],
+                brandAccent: theme.colors.cyan[7],
               },
             },
           },
         }}
-        providers={[]}
+        providers={["github", "discord"]}
         redirectTo="/"
-        socialLayout="horizontal"
+        socialLayout="vertical"
         supabaseClient={supabase}
         theme={preferences.theme === "system" ? colorScheme : preferences.theme}
       />
