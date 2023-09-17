@@ -3,6 +3,7 @@ import { ArrowRight } from "react-feather";
 import { useForm } from "react-hook-form";
 import useGlobalStore from "../../../store/useGlobalStore";
 import { IStepProps } from "../RegisterUser";
+import { IconCurrencyDollar } from "@tabler/icons-react";
 
 interface IFormValues {
   name: string;
@@ -84,6 +85,7 @@ const Step1 = ({ nextStep }: IStepProps): JSX.Element => {
         label="Gross Income"
         placeholder="50000"
         withAsterisk
+        icon={<IconCurrencyDollar size={15}/>}
       />
       <TextInput
         mt={10}
