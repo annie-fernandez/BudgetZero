@@ -64,7 +64,7 @@ const TransactionHistory = ({
         })}
         {!hideSeeAll && transactions.length > 5 && (
           <Flex justify="center" mt={20}>
-            <Link to="/history">
+            <Link to="/app/history">
               <Button leftIcon={<ExternalLink size={14} />}>See All</Button>
             </Link>
           </Flex>
@@ -81,7 +81,6 @@ const TransactionHistory = ({
           openModal({
             title: "Add new transaction",
             children: <AddTransactionModal />,
-            size: "lg",
             overlayProps: {
               blur: 5,
             },

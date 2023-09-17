@@ -7,6 +7,7 @@ import Budget from "../Budgets/Budgets";
 import SpentEachDay from "../Graphs/SpentEachDay/SpentEachDay";
 import SpentOvertime from "../Graphs/SpentOverTime/SpentOverTime";
 import useGlobalStore from "../../../store/useGlobalStore";
+import { getGraphDataEachDay } from "../Graphs/helpers/getGraphDataEachDay";
 
 const Dashboard: React.FC = (): JSX.Element | null => {
   const { transactions } = useGlobalStore();
@@ -39,7 +40,7 @@ const Dashboard: React.FC = (): JSX.Element | null => {
         </Tabs.Panel>
 
         <Tabs.Panel value="visuals" pt="xs">
-          {transactions.length <= 3 ? (
+          {getGraphDataEachDay({ transactions }).length <= 3 ? (
             <Alert title="Not enough data">
               You currently don't have enough data to be displayed. Start adding
               transactions and you'll see they graphed here over time!
