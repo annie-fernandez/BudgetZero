@@ -1,9 +1,9 @@
 import { Alert, Button, Grid, Skeleton } from "@mantine/core";
+import { openModal } from "@mantine/modals";
+import { ArrowRight } from "react-feather";
+import AddTransactionModal from "../../../components/TransactionHistory/AddTransactionModal/AddTransactionModal";
 import useGlobalStore from "../../../store/useGlobalStore";
 import BudgetCategory from "./BudgetCategory/BudgetCategory";
-import { openModal } from "@mantine/modals";
-import AddTransactionModal from "../../../components/TransactionHistory/AddTransactionModal/AddTransactionModal";
-import { AlignRight, ArrowRight } from "react-feather";
 
 const Budget = () => {
   const {
@@ -48,6 +48,9 @@ const Budget = () => {
               openModal({
                 title: "Create a new transaction",
                 children: <AddTransactionModal />,
+                overlayProps: {
+                  blur: 5,
+                },
               });
             }}
           >
