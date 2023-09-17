@@ -88,8 +88,9 @@ const BudgetCategory = ({
       </h3>
       <Divider mt={10} />
       <Box mt={10}>
-        <p>Total spent: {formatToUSD(totalSpent)}</p>
         <p>Budget: {formatToUSD(category.budget || 0)}</p>
+        <p>Total spent: {formatToUSD(totalSpent)}</p>
+        <p>Number of transactions: {category.transactions.length}</p>
       </Box>
       {renderRightComponent()}
     </Paper>
