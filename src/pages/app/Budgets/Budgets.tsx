@@ -1,22 +1,48 @@
-import React from "react";
+import { Grid, Skeleton } from "@mantine/core";
 import useGlobalStore from "../../../store/useGlobalStore";
 import BudgetCategory from "./BudgetCategory/BudgetCategory";
-import { Grid } from "@mantine/core";
 
 const Budget = () => {
-  const { categoriesWithTransactions } = useGlobalStore();
+  const {
+    categoriesWithTransactions,
+    app: { isLoadingCategoriesWithTransactions },
+  } = useGlobalStore();
+
+  const renderCorrectComponent = () => {
+    if (isLoadingCategoriesWithTransactions) {
+      return (
+        <>
+          <Grid.Col sm={12} md={6}>
+            <Skeleton h={100} />
+          </Grid.Col>
+          <Grid.Col sm={12} md={6}>
+            <Skeleton h={100} />
+          </Grid.Col>
+          <Grid.Col sm={12} md={6}>
+            <Skeleton h={100} />
+          </Grid.Col>
+          <Grid.Col sm={12} md={6}>
+            <Skeleton h={100} />
+          </Grid.Col>
+          <Grid.Col sm={12} md={6}>
+            <Skeleton h={100} />
+          </Grid.Col>
+        </>
+      );
+    }
+
+    return categoriesWithTransactions.map((category) => {
+      return (
+        <Grid.Col sm={12} md={6}>
+          <BudgetCategory category={category} />
+        </Grid.Col>
+      );
+    });
+  };
 
   return (
     <div>
-      <Grid>
-        {categoriesWithTransactions.map((category) => {
-          return (
-            <Grid.Col sm={12} md={6}>
-              <BudgetCategory category={category} />
-            </Grid.Col>
-          );
-        })}
-      </Grid>
+      <Grid>{renderCorrectComponent()}</Grid>
     </div>
   );
 };
