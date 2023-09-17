@@ -71,21 +71,21 @@ function Feature({
 const mockdata = [
   {
     icon: IconTruck,
-    title: "Free Worldwide shipping",
+    title: "Security",
     description:
-      "As electricity builds up inside its body, it becomes more aggressive. One theory is that the electricity.",
+      "Secure user registration and login processes, with multiple sign in options for a safe authentication",
   },
   {
     icon: IconCertificate,
-    title: "Best Quality Product",
+    title: "Graphs and Charts",
     description:
-      "Slakoth’s heart beats just once a minute. Whatever happens, it is content to loaf around motionless.",
+      "Illustrates your expense journey through visually appealing charts to track spending patterns over time.",
   },
   {
     icon: IconCoin,
-    title: "Very Affordable Pricing",
+    title: "Income and Expense Tracking",
     description:
-      "Thought to have gone extinct, Relicanth was given a name that is a variation of the name of the person who discovered.",
+      "Categorize and analyze expenses into specific categories to help users understand where their money is going",
   },
 ];
 
