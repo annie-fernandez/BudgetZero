@@ -11,6 +11,7 @@ import {
   rem,
 } from "@mantine/core";
 import { IconCheck } from "@tabler/icons-react";
+import { Link } from "react-router-dom";
 
 const useStyles = createStyles((theme) => ({
   inner: {
@@ -109,9 +110,12 @@ export function Jumbo() {
             </List>
 
             <Group mt={30}>
-              <Button radius="xl" size="md" className={classes.control}>
-                Get started
-              </Button>
+              <Link to="/app">
+                <Button radius="xl" size="md" className={classes.control}>
+                  Login
+                </Button>
+              </Link>
+
               <Button
                 variant="default"
                 radius="xl"
