@@ -81,7 +81,6 @@ const TransactionHistory = ({
           openModal({
             title: "Add new transaction",
             children: <AddTransactionModal />,
-            size: "lg",
             overlayProps: {
               blur: 5,
             },

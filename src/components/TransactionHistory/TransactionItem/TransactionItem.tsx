@@ -1,7 +1,18 @@
-import { Badge, Box, Flex, Paper, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Badge,
+  Box,
+  Flex,
+  Paper,
+  Text,
+  Tooltip,
+} from "@mantine/core";
 import formatDateWithTime from "../../../helpers/formatDate";
 import { formatToUSD } from "../../../helpers/formatToTwoDecimalPlaces";
 import { ITransactions } from "../../../store/useGlobalStore";
+import { Edit } from "react-feather";
+import { openModal } from "@mantine/modals";
+import AddTransactionModal from "../AddTransactionModal/AddTransactionModal";
 
 interface Props {
   transaction: ITransactions;
@@ -17,6 +28,21 @@ const TransactionItem = ({ transaction }: Props) => {
               {transaction.name}
             </Text>
             <Badge ml={5}>{transaction?.category?.name}</Badge>
+            <Tooltip label="Edit transaction">
+              <ActionIcon
+                onClick={() => {
+                  openModal({
+                    title: "Edit transaction",
+                    children: <AddTransactionModal transaction={transaction} />,
+                    overlayProps: {
+                      blur: 5,
+                    },
+                  });
+                }}
+              >
+                <Edit size={12} />
+              </ActionIcon>
+            </Tooltip>
           </Flex>
 
           <Text size={12}>{transaction.description}</Text>
