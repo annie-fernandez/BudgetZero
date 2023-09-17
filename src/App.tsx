@@ -1,20 +1,25 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { MantineProvider } from "@mantine/core";
-import "./App.css";
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Error404 from "./pages/404/Error404";
-import { SessionContextProvider } from "@supabase/auth-helpers-react";
-import useGlobalStore from "./store/useGlobalStore";
 import { useColorScheme } from "@mantine/hooks";
-import { ModalsProvider } from "@mantine/modals";
+import { ModalsProvider, openModal } from "@mantine/modals";
 import { Notifications } from "@mantine/notifications";
-import LoadingOverlay from "./components/LoadingOverlay/LoadingOverlay";
+import { SpotlightAction, SpotlightProvider } from "@mantine/spotlight";
+import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { createClient } from "@supabase/supabase-js";
+import { useEffect, useState } from "react";
+import { Search } from "react-feather";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import "./App.css";
+import LoadingOverlay from "./components/LoadingOverlay/LoadingOverlay";
+import AddTransactionModal from "./components/TransactionHistory/AddTransactionModal/AddTransactionModal";
 import constants from "./constants/constants";
-import Root from "./pages/app/root";
+import { formatToUSD } from "./helpers/formatToTwoDecimalPlaces";
+import Error404 from "./pages/404/Error404";
 import Dashboard from "./pages/app/Dashboard/Dashboard";
 import History from "./pages/app/History/History";
+import Root from "./pages/app/root";
 import LandingPage from "./pages/landingPage/LandingPage";
+import useGlobalStore from "./store/useGlobalStore";
 
 const supabase = createClient(
   constants.supabaseUrl || "",
@@ -23,7 +28,47 @@ const supabase = createClient(
 
 function App() {
   const colorScheme = useColorScheme();
-  const { preferences } = useGlobalStore();
+  const { preferences, transactions } = useGlobalStore();
+  const [actions, setActions] = useState<SpotlightAction[]>([]);
+
+  useEffect(() => {
+    if (transactions.length > 0) {
+      const actions = transactions.map((transaction) => {
+        return {
+          title: `${transaction.name} - ${formatToUSD(transaction.amount)}`,
+          description: `${transaction.description}`,
+          onTrigger: () =>
+            openModal({
+              title: "Edit Transaction",
+              children: <AddTransactionModal transaction={transaction} />,
+              overlayProps: {
+                blur: 5,
+              },
+            }),
+        };
+      });
+      setActions(actions);
+    }
+
+    if (transactions.length === 0) {
+      const actions: SpotlightAction[] = [
+        {
+          title: "Create new transaction",
+          description: "Create a new transaction",
+          onTrigger: () => {
+            openModal({
+              title: "Create new transaction",
+              children: <AddTransactionModal />,
+              overlayProps: {
+                blur: 5,
+              },
+            });
+          },
+        },
+      ];
+      setActions(actions);
+    }
+  }, [transactions]);
 
   const router = createBrowserRouter([
     {
@@ -97,8 +142,16 @@ function App() {
       >
         <Notifications />
         <ModalsProvider>
-          <RouterProvider router={router} />
-          <LoadingOverlay />
+          <SpotlightProvider
+            actions={actions}
+            searchIcon={<Search size="1.2rem" />}
+            searchPlaceholder="Search..."
+            shortcut="mod + shift + k"
+            nothingFoundMessage="Nothing found..."
+          >
+            <RouterProvider router={router} />
+            <LoadingOverlay />
+          </SpotlightProvider>
         </ModalsProvider>
       </MantineProvider>
     </SessionContextProvider>

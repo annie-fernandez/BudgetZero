@@ -27,22 +27,28 @@ const TransactionItem = ({ transaction }: Props) => {
             <Text size={18} weight="bold">
               {transaction.name}
             </Text>
-            <Badge ml={5}>{transaction?.category?.name}</Badge>
-            <Tooltip label="Edit transaction">
-              <ActionIcon
-                onClick={() => {
-                  openModal({
-                    title: "Edit transaction",
-                    children: <AddTransactionModal transaction={transaction} />,
-                    overlayProps: {
-                      blur: 5,
-                    },
-                  });
-                }}
-              >
-                <Edit size={12} />
-              </ActionIcon>
-            </Tooltip>
+            {transaction.category && (
+              <Badge ml={5}>{transaction?.category?.name}</Badge>
+            )}
+            {transaction.category && (
+              <Tooltip label="Edit transaction">
+                <ActionIcon
+                  onClick={() => {
+                    openModal({
+                      title: "Edit transaction",
+                      children: (
+                        <AddTransactionModal transaction={transaction} />
+                      ),
+                      overlayProps: {
+                        blur: 5,
+                      },
+                    });
+                  }}
+                >
+                  <Edit size={12} />
+                </ActionIcon>
+              </Tooltip>
+            )}
           </Flex>
 
           <Text size={12}>{transaction.description}</Text>

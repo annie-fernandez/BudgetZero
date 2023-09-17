@@ -19,6 +19,7 @@ import {
 } from "../../../../helpers/formatToTwoDecimalPlaces";
 import { ICategoryWithTransactions } from "../../../../store/useGlobalStore";
 import SetupSpendingBudget from "../SetupSpendingBudget/SetupSpendingBudget";
+import TransactionItem from "../../../../components/TransactionHistory/TransactionItem/TransactionItem";
 
 const BudgetCategory = ({
   category,
@@ -91,12 +92,21 @@ const BudgetCategory = ({
         </h3>
         <Flex align="center">
           <Button
-            // onClick={() => {
-            //   openModal({
-            //     title: `Transactions for ${category.name}`,
-            //     children: <>{category.tr}</>,
-            //   });
-            // }}
+            onClick={() => {
+              openModal({
+                title: `Transactions for ${category.name}`,
+                overlayProps: {
+                  blur: 5,
+                },
+                children: (
+                  <>
+                    {category.transactions.map((transaction) => {
+                      return <TransactionItem transaction={transaction} />;
+                    })}
+                  </>
+                ),
+              });
+            }}
             variant="subtle"
           >
             See Transactions

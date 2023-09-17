@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 const useStyles = createStyles((theme) => ({
   inner: {
     display: "flex",
+    alignItems: "center",
     justifyContent: "space-between",
     paddingTop: rem(2),
     paddingBottom: `calc(${theme.spacing.xl} * 4)`,
@@ -76,10 +77,12 @@ export function Jumbo() {
         <div className={classes.inner}>
           <div className={classes.content}>
             <Title className={classes.title}>
-              Keep your overspending at <span className={classes.highlight}>Zero</span> 
+              Keep your overspending at{" "}
+              <span className={classes.highlight}>Zero</span>
             </Title>
             <Text color="dimmed" mt="md">
-            Regain control of your finances by adhering to your budgets, we simplify the process for you!
+              Regain control of your finances by adhering to your budgets, we
+              simplify the process for you!
             </Text>
 
             <List
@@ -109,15 +112,16 @@ export function Jumbo() {
                   Login
                 </Button>
               </Link>
-
-              <Button
-                variant="default"
-                radius="xl"
-                size="md"
-                className={classes.control}
-              >
-                Source code
-              </Button>
+              <a href="https://github.com/annie-fernandez/BudgetZero">
+                <Button
+                  variant="default"
+                  radius="xl"
+                  size="md"
+                  className={classes.control}
+                >
+                  Source code
+                </Button>
+              </a>
             </Group>
           </div>
           <Image src="/jumbo.svg" className={classes.image} />

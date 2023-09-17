@@ -1,4 +1,3 @@
-import React from "react";
 import TransactionHistory from "../../../components/TransactionHistory/TransactionHistory";
 
 const History = (): JSX.Element => {
