@@ -130,6 +130,8 @@ const useGlobalStore = create<IGlobalState>()(
             });
           }
 
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           set((state) => ({
             app: {
               ...state.app,
@@ -203,7 +205,8 @@ const useGlobalStore = create<IGlobalState>()(
               message: error.message,
             });
           }
-
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
           set((state) => ({
             categoriesWithTransactions: data,
             app: {

@@ -76,13 +76,10 @@ export function Jumbo() {
         <div className={classes.inner}>
           <div className={classes.content}>
             <Title className={classes.title}>
-              A <span className={classes.highlight}>modern</span> React <br />{" "}
-              components library
+              Keep your overspending at <span className={classes.highlight}>Zero</span> 
             </Title>
             <Text color="dimmed" mt="md">
-              Build fully functional accessible web applications faster than
-              ever – Mantine includes more than 120 customizable components and
-              hooks to cover you in any situation
+            Regain control of your finances by adhering to your budgets, we simplify the process for you!
             </Text>
 
             <List
@@ -96,16 +93,13 @@ export function Jumbo() {
               }
             >
               <List.Item>
-                <b>TypeScript based</b> – build type safe applications, all
-                components and hooks export types
+                <b>Enhenced User Experience</b> –  smooth and simple User Interface 
               </List.Item>
               <List.Item>
-                <b>Free and open source</b> – all packages have MIT license, you
-                can use Mantine in any project
+                <b>Spotlight Search</b> – search for transactions by price, ammount, description, or name
               </List.Item>
               <List.Item>
-                <b>No annoying focus ring</b> – focus ring will appear only when
-                user navigates with keyboard
+                <b>Strong Visuals </b> – illustrated history by charts and tables 
               </List.Item>
             </List>
 
