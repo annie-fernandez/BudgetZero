@@ -76,10 +76,12 @@ export function Jumbo() {
         <div className={classes.inner}>
           <div className={classes.content}>
             <Title className={classes.title}>
-              Keep your overspending at <span className={classes.highlight}>Zero</span> 
+              Keep your overspending at{" "}
+              <span className={classes.highlight}>Zero</span>
             </Title>
             <Text color="dimmed" mt="md">
-            Regain control of your finances by adhering to your budgets, we simplify the process for you!
+              Regain control of your finances by adhering to your budgets, we
+              simplify the process for you!
             </Text>
 
             <List
@@ -93,13 +95,16 @@ export function Jumbo() {
               }
             >
               <List.Item>
-                <b>Enhenced User Experience</b> –  smooth and simple User Interface 
+                <b>Enhenced User Experience</b> – smooth and simple User
+                Interface
               </List.Item>
               <List.Item>
-                <b>Spotlight Search</b> – search for transactions by price, ammount, description, or name
+                <b>Spotlight Search</b> – search for transactions by price,
+                ammount, description, or name
               </List.Item>
               <List.Item>
-                <b>Strong Visuals </b> – illustrated history by charts and tables 
+                <b>Strong Visuals </b> – illustrated history by charts and
+                tables
               </List.Item>
             </List>
 
@@ -109,15 +114,16 @@ export function Jumbo() {
                   Login
                 </Button>
               </Link>
-
-              <Button
-                variant="default"
-                radius="xl"
-                size="md"
-                className={classes.control}
-              >
-                Source code
-              </Button>
+              <a href="https://github.com/annie-fernandez/BudgetZero">
+                <Button
+                  variant="default"
+                  radius="xl"
+                  size="md"
+                  className={classes.control}
+                >
+                  Source code
+                </Button>
+              </a>
             </Group>
           </div>
           <Image src="/jumbo.svg" className={classes.image} />
