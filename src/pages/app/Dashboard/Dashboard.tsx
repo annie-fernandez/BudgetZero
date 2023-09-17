@@ -8,6 +8,7 @@ import { Divider, Grid } from "@mantine/core";
 import TransactionHistory from "../../../components/TransactionHistory/TransactionHistory";
 import IncomeStats from "../../../components/Stats/IncomeStats";
 import Budget from "../Budgets/Budgets";
+import SpentOvertime from "../Graphs/SpentOverTime/SpentOverTime";
 
 const Dashboard: React.FC = (): JSX.Element | null => {
   const {
@@ -37,7 +38,7 @@ const Dashboard: React.FC = (): JSX.Element | null => {
         label: "Monthly Gross Income",
         count: monthlyGrossIncome,
         part: 59,
-        color: "#47d6ab",
+        color: "#15aabf",
       },
       {
         label: "Monthly Net Income",
@@ -49,7 +50,7 @@ const Dashboard: React.FC = (): JSX.Element | null => {
         label: "Monthly Tax Reduction",
         count: monthlyTaxReduction,
         part: 6,
-        color: "#4fcdf7",
+        color: "#15aabf",
       },
     ],
   };
@@ -67,6 +68,15 @@ const Dashboard: React.FC = (): JSX.Element | null => {
         </Grid.Col>
         <Grid.Col md={6} xs={12}>
           <TransactionHistory title="Recent Transactions" maxTransactions={5} />
+        </Grid.Col>
+      </Grid>
+      <Divider mb={20} label="Visualize your spending" />
+      <Grid>
+        <Grid.Col span={6}>
+          <SpentOvertime />
+        </Grid.Col>
+        <Grid.Col md={6} xs={12}>
+          {/* <TransactionHistory title="Recent Transactions" maxTransactions={5} /> */}
         </Grid.Col>
       </Grid>
       <Divider label="Budget by category" mb={20} mt={40} />
