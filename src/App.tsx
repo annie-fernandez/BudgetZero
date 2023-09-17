@@ -19,6 +19,7 @@ import History from "./pages/app/History/History";
 import Root from "./pages/app/root";
 import LandingPage from "./pages/landingPage/LandingPage";
 import useGlobalStore from "./store/useGlobalStore";
+import { formatToUSD } from "./helpers/formatToTwoDecimalPlaces";
 
 const supabase = createClient(
   constants.supabaseUrl || "",
@@ -35,8 +36,8 @@ function App() {
     if (transactions.length > 0) {
       const actions = transactions.map((transaction) => {
         return {
-          title: `${transaction.name} - ${transaction.amount}`,
-          description: `${transaction.description}}`,
+          title: `${transaction.name} - ${formatToUSD(transaction.amount)}`,
+          description: `${transaction.description}`,
           onTrigger: () =>
             openModal({
               title: "Edit Transaction",
